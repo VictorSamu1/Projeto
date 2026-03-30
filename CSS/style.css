@@ -1,0 +1,54 @@
+/* Identidade Visual  */
+body {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    margin: 0;
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+header {
+    background-color: #FF0000;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1200px; /* Proporção [cite: 2] */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Grid de Lojas e Notícias [cite: 10, 17] */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.item-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.item-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
