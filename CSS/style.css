@@ -1,16 +1,20 @@
-/* Identidade Visual  */
+/* Identidade Visual e Layout Base */
 body {
-    font-family: 'Playfair Display', 'Georgia', serif;
+    font-family: 'Playfair Display', 'Georgia', serif; /*  */
     margin: 0;
-    color: #000000;
-    background-color: #FFFFFF;
+    color: #000000; /*  */
+    background-color: #FFFFFF; /*  */
 }
 
 header {
-    background-color: #FF0000;
+    background-color: #FF0000; /*  */
     color: white;
     padding: 20px;
     text-align: center;
+}
+
+nav {
+    margin-top: 15px;
 }
 
 nav a {
@@ -21,34 +25,68 @@ nav a {
 }
 
 .container {
-    max-width: 1200px; /* Proporção [cite: 2] */
+    max-width: 1200px; /*  */
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Grid de Lojas e Notícias [cite: 10, 17] */
-.grid-container {
+/* Grid de Lojas (Home) e Notícias */
+.grid-lojas {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* [cite: 10] */
     gap: 20px;
 }
 
 .item-card {
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
+    border-radius: 8px;
 }
 
 .item-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    background-color: #eee;
 }
 
+/* Footer [cite: 11] */
 footer {
-    background-color: #000000;
+    background-color: #000000; /*  */
     color: white;
     text-align: center;
     padding: 20px;
     margin-top: 40px;
+}
+/* Estilização dos botões de favoritar */
+button {
+    background-color: transparent; /* Fundo transparente para o look 'clear' */
+    color: #FF0000;                /* Cor do texto combinando com o seu header */
+    border: 1px solid #FF0000;     /* Borda fina e colorida */
+    padding: 6px 15px;
+    border-radius: 20px;           /* Bordas bem arredondadas (pílula) */
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    font-size: 0.9em;
+    transition: all 0.3s ease;     /* Transição suave para o hover */
+}
+
+/* Efeito ao passar o mouse */
+button:hover {
+    background-color: #FF0000;     /* Inverte as cores */
+    color: white;
+    box-shadow: 0 2px 8px rgba(255, 0, 0, 0.2); /* Sombra leve para dar profundidade */
+}
+
+/* Ajuste no input para combinar com o estilo clean */
+input[type="text"] {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #FF0000;
 }
