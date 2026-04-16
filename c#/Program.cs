@@ -9,68 +9,117 @@ builder.Services.AddHttpClient();
 var app = builder.Build();
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+// =========================================================
+// MATEMÁTICA: Distância Real
+// =========================================================
+double CalcularDistancia(double lat1, double lon1, double lat2, double lon2) {
+    var R = 6371; 
+    var dLat = (lat2 - lat1) * Math.PI / 180.0;
+    var dLon = (lon2 - lon1) * Math.PI / 180.0;
+    var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+            Math.Cos(lat1 * Math.PI / 180.0) * Math.Cos(lat2 * Math.PI / 180.0) *
+            Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+    var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+    return R * c; 
+}
+
 app.MapGet("/api/buscar", async (string termo, double lat, double lng, HttpClient http, IConfiguration config) => {
     
     var apiKey = config["GeminiApiKey"];
     if(string.IsNullOrWhiteSpace(termo)) return Results.Ok(new object[0]);
 
-    // 1. IA EXPANDE OS TERMOS (Padaria, Panificadora, etc)
+    // =========================================================
+    // 1. IA TRADUZ PARA TAGS OFICIAIS DO OPENSTREETMAP
+    // =========================================================
     var prompt = $@"O usuário pesquisou por: '{termo}'.
-Gere EXATAMENTE 3 sinônimos ou termos relacionados para estabelecimentos comerciais.
-Exemplo: 'pão' -> 'padaria, panificadora, lanchonete'.
-Responda APENAS os termos separados por vírgula.";
+Sua tarefa é traduzir isso para UMA tag oficial do OpenStreetMap.
+Exemplos de tags do OSM:
+- Padaria, pão -> shop=bakery
+- Farmácia, remédio -> amenity=pharmacy
+- Supermercado -> shop=supermarket
+- Restaurante -> amenity=restaurant
+- Bar, pub -> amenity=bar
+- Mecânico -> shop=car_repair
+- Chaveiro -> craft=key_cutter
+Responda APENAS com a chave e o valor no formato chave=valor (ex: shop=bakery). Se não souber, use shop=supermarket.";
 
     var requestBody = new { contents = new[] { new { parts = new[] { new { text = prompt } } } } };
     var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
     
-    string respostaIA = termo;
+    string tagOSM = "shop=supermarket"; // Fallback seguro
     try {
         var responseIA = await http.PostAsync($"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={apiKey}", content);
         var jsonIA = await responseIA.Content.ReadAsStringAsync();
         using var jsonDoc = JsonDocument.Parse(jsonIA);
-        respostaIA = jsonDoc.RootElement.GetProperty("candidates")[0].GetProperty("content").GetProperty("parts")[0].GetProperty("text").GetString()!.Trim();
+        tagOSM = jsonDoc.RootElement.GetProperty("candidates")[0].GetProperty("content").GetProperty("parts")[0].GetProperty("text").GetString()!.Trim();
     } catch { }
 
-    var palavrasBusca = respostaIA.Split(',').Select(p => p.Trim()).ToList();
-    if (!palavrasBusca.Contains(termo)) palavrasBusca.Add(termo);
+    Console.WriteLine($"[Scanner Overpass] Usuário quer: '{termo}' -> Tag Mapeada: '{tagOSM}'");
 
-    // 2. BUSCA RESTRITA A MINAS GERAIS COM PRIORIDADE LOCAL
-    // Coordenadas aproximadas de Minas Gerais (Viewbox: Oeste, Norte, Leste, Sul)
-    string viewboxMG = "-51.10,-14.23,-39.85,-22.92"; 
-    var resultadosFinais = new Dictionary<long, object>();
+    // =========================================================
+    // 2. O SCANNER OVERPASS (Raio de 30km do GPS)
+    // =========================================================
+    var partesTag = tagOSM.Split('=');
+    if (partesTag.Length != 2) return Results.Ok(new object[0]);
+    
+    string chave = partesTag[0].Trim();
+    string valor = partesTag[1].Trim();
+    
+    string latStr = lat.ToString(CultureInfo.InvariantCulture);
+    string lonStr = lng.ToString(CultureInfo.InvariantCulture);
+    
+    // Comando QL do Overpass: "Busque nós (nodes) num raio de 30.000 metros (30km) do usuário que tenham essa exata tag"
+    string queryOverpass = $@"[out:json][timeout:25];
+        (
+          node[""{chave}""=""{valor}""](around:30000,{latStr},{lonStr});
+        );
+        out body;
+        >;
+        out skel qt;";
 
-    foreach (var palavra in palavrasBusca) {
-        // q=palavra + Minas Gerais (para reforçar)
-        // viewbox=MG + bounded=1 (trava a busca dentro do estado)
-        // lat/lon (dá prioridade ao que está perto de você)
-        var urlMapa = $"https://nominatim.openstreetmap.org/search?format=json&q={Uri.EscapeDataString(palavra + " Minas Gerais")}&viewbox={viewboxMG}&bounded=1&lat={lat.ToString(CultureInfo.InvariantCulture)}&lon={lng.ToString(CultureInfo.InvariantCulture)}&limit=20";
+    var urlOverpass = "https://overpass-api.de/api/interpreter";
+    var requestScanner = new HttpRequestMessage(HttpMethod.Post, urlOverpass);
+    requestScanner.Content = new StringContent(queryOverpass, Encoding.UTF8, "application/x-www-form-urlencoded");
+    
+    var resultadosFiltrados = new List<object>();
+
+    try {
+        var responseScanner = await http.SendAsync(requestScanner);
+        var jsonScanner = await responseScanner.Content.ReadAsStringAsync();
+        using var scanDoc = JsonDocument.Parse(jsonScanner);
         
-        var requestMapa = new HttpRequestMessage(HttpMethod.Get, urlMapa);
-        requestMapa.Headers.Add("User-Agent", "ProjetoAquiEBaoUai/1.0");
+        var elements = scanDoc.RootElement.GetProperty("elements").EnumerateArray();
+        
+        foreach (var lugar in elements) {
+            // Nem toda loja tem nome cadastrado. Se não tiver, chamamos pelo termo.
+            string nomeLoja = lugar.TryGetProperty("tags", out var tags) && tags.TryGetProperty("name", out var nameProp) 
+                              ? nameProp.GetString()! 
+                              : termo.ToUpper() + " (Local Sem Nome)";
 
-        try {
-            var responseMapa = await http.SendAsync(requestMapa);
-            var jsonMapa = await responseMapa.Content.ReadAsStringAsync();
-            using var mapDoc = JsonDocument.Parse(jsonMapa);
-            
-            foreach (var lugar in mapDoc.RootElement.EnumerateArray()) {
-                long id = lugar.GetProperty("place_id").GetInt64();
-                if (!resultadosFinais.ContainsKey(id)) {
-                    string nomeCompleto = lugar.GetProperty("display_name").GetString()!;
-                    resultadosFinais[id] = new {
-                        Id = id,
-                        Nome = nomeCompleto.Split(',')[0], 
-                        Lat = double.Parse(lugar.GetProperty("lat").GetString()!, CultureInfo.InvariantCulture),
-                        Lng = double.Parse(lugar.GetProperty("lon").GetString()!, CultureInfo.InvariantCulture),
-                        Descricao = nomeCompleto
-                    };
-                }
-            }
-        } catch { }
-        await Task.Delay(200); 
+            double lojaLat = lugar.GetProperty("lat").GetDouble();
+            double lojaLon = lugar.GetProperty("lon").GetDouble();
+            double distanciaKm = CalcularDistancia(lat, lng, lojaLat, lojaLon);
+
+            resultadosFiltrados.Add(new {
+                Id = lugar.GetProperty("id").GetInt64(),
+                Nome = nomeLoja,
+                Lat = lojaLat,
+                Lng = lojaLon,
+                Descricao = $"Categoria OSM: {tagOSM}",
+                Distancia = distanciaKm 
+            });
+        }
+    } catch (Exception ex) { 
+        Console.WriteLine($"Erro no Scanner: {ex.Message}");
     }
 
-    return Results.Ok(resultadosFinais.Values);
+    // 3. ORDENA E DEVOLVE
+    var listaFinal = resultadosFiltrados
+        .OrderBy(r => (double)r.GetType().GetProperty("Distancia")!.GetValue(r)!)
+        .Take(30) // Pega as 30 mais próximas
+        .ToList();
+
+    return Results.Ok(listaFinal);
 });
 
 app.Run();
