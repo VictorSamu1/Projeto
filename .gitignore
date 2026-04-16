@@ -1,8 +1,9 @@
 # ==========================================
 # IGNORAR PASTAS PESADAS DO C#
 # ==========================================
-bin/
-obj/
+c#/bin/
+c#/obj/
+c#/appsettings.Development.json
 
 # ==========================================
 # IGNORAR SENHAS E CONFIGURAÇÕES LOCAIS (A SUA CHAVE DA IA)

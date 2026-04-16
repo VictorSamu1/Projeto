@@ -1,130 +1,98 @@
 let mapa;
 let camadaLojas = L.layerGroup(); 
-
-// Variável para guardar a posição do usuário (padrão: Praça 7 em BH)
+// Posição padrão caso o GPS do usuário demore (Centro de BH)
 let posicaoUsuario = L.latLng(-19.9208, -43.9378); 
 
 function iniciarMapa() {
     mapa = L.map('meuMapa').setView(posicaoUsuario, 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+        attribution: '© OpenStreetMap' 
     }).addTo(mapa);
-
+    
     camadaLojas.addTo(mapa);
 
-    // Tenta achar o usuário pelo GPS
-    mapa.locate({setView: true, maxZoom: 16});
+    // Pede a localização real do usuário
+    mapa.locate({setView: true, maxZoom: 15});
 
     mapa.on('locationfound', (e) => {
-        posicaoUsuario = e.latlng; // Salva a posição real do usuário!
+        posicaoUsuario = e.latlng;
         L.circleMarker(posicaoUsuario, { radius: 8, color: 'white', fillColor: '#007bff', fillOpacity: 1 })
-         .addTo(mapa)
-         .bindPopup("Você está aqui!")
-         .openPopup();
+            .addTo(mapa)
+            .bindPopup("Você está aqui!")
+            .openPopup();
     });
 
     mapa.on('locationerror', () => {
-        alert("GPS negado ou falhou. Usando o centro de BH como base para calcular distâncias.");
+        console.warn("GPS negado ou indisponível. Usando localização padrão.");
     });
 }
 
-// =========================================================
-// A MÁGICA: Buscar na API gratuita do OpenStreetMap
-// =========================================================
-async function buscarNaApiExterna(palavraChave) {
-    // Adicionamos "Minas Gerais" na busca para travar a região!
-    const query = `${palavraChave} Minas Gerais`;
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=15`;
+// CHAMA O C# ENVIANDO O TERMO E O GPS
+async function buscarLojasNoCSharp(termo) {
+    if (!termo) return;
+
+    const containerLista = document.querySelector('.store-list');
+    containerLista.innerHTML = '<li>Pesquisando em toda Minas Gerais...</li>';
 
     try {
+        const url = `http://localhost:5125/api/buscar?termo=${encodeURIComponent(termo)}&lat=${posicaoUsuario.lat}&lng=${posicaoUsuario.lng}`;
         const response = await fetch(url);
-        let resultados = await response.json();
-
-        if (resultados.length === 0) {
-            alert("Nenhum local encontrado com essa palavra em Minas Gerais.");
-            return;
-        }
-
-        // 1. Calcula a distância de cada local até o usuário
-        resultados.forEach(local => {
-            const posicaoLocal = L.latLng(local.lat, local.lon);
-            // map.distance devolve a distância em metros
-            local.distanciaMetros = mapa.distance(posicaoUsuario, posicaoLocal);
-        });
-
-        // 2. Ordena a lista do mais perto pro mais longe
-        resultados.sort((a, b) => a.distanciaMetros - b.distanciaMetros);
-
-        // 3. Coloca os pinos no mapa e atualiza a barra lateral
-        renderizarLojasNoMapaELista(resultados);
-
-        // 4. Dá um "zoom" para mostrar os resultados
-        const grupo = new L.featureGroup(camadaLojas.getLayers());
-        mapa.fitBounds(grupo.getBounds().pad(0.1));
-
+        const lojasRecebidas = await response.json();
+        
+        processarResultados(lojasRecebidas);
     } catch (erro) {
-        console.error("Erro na busca:", erro);
-        alert("Erro ao buscar locais.");
+        console.error("Erro no servidor:", erro);
+        containerLista.innerHTML = '<li>Erro ao conectar com o servidor C#. Verifique se ele está rodando.</li>';
     }
 }
 
-// =========================================================
-// Renderizar Pinos e a Lista Lateral
-// =========================================================
-function renderizarLojasNoMapaELista(lista) {
-    camadaLojas.clearLayers(); // Limpa o mapa
-    
+// DESENHA NA TELA
+function processarResultados(lista) {
+    camadaLojas.clearLayers();
     const containerLista = document.querySelector('.store-list');
-    containerLista.innerHTML = ''; // Limpa a lista lateral
+    containerLista.innerHTML = '';
 
-    lista.forEach(local => {
-        // ---- ADICIONA NO MAPA ----
-        const pino = L.marker([local.lat, local.lon])
-            .bindPopup(`<b>${local.display_name.split(',')[0]}</b><br>Distância: ${(local.distanciaMetros / 1000).toFixed(1)} km`);
+    if (lista.length === 0) {
+        containerLista.innerHTML = '<li>Nada encontrado no estado de Minas Gerais.</li>';
+        return;
+    }
+
+    // A variável bounds guarda todas as coordenadas para a câmera ajustar o zoom no final
+    let bounds = [[posicaoUsuario.lat, posicaoUsuario.lng]];
+
+    lista.forEach(loja => {
+        // Cria o pino
+        const pino = L.marker([loja.lat, loja.lng])
+            .bindPopup(`<b>${loja.nome}</b><br><small>${loja.descricao}</small>`);
         camadaLojas.addLayer(pino);
+        
+        bounds.push([loja.lat, loja.lng]);
 
-        // ---- ADICIONA NA LISTA LATERAL ----
-        // Pega só o primeiro pedaço do nome pra não ficar gigante
-        const nomeCurto = local.display_name.split(',')[0];
-        const kmStr = (local.distanciaMetros / 1000).toFixed(1) + ' km';
-
+        // Cria a lista lateral
+        const km = loja.distancia.toFixed(2);
         const li = document.createElement('li');
         li.className = 'store-item';
         li.innerHTML = `
             <div>
-                <span style="display:block; font-weight:bold;">${nomeCurto}</span>
-                <small style="color: #666;">A ${kmStr} de você</small>
+                <strong>${loja.nome}</strong>
+                <small style="display:block; color:gray">${km} km de você</small>
             </div>
-            <button class="btn-favorite" onclick="mapa.flyTo([${local.lat}, ${local.lon}], 17)">Ver</button>
+            <button class="btn-favorite" onclick="mapa.flyTo([${loja.lat}, ${loja.lng}], 17)">Ver no Mapa</button>
         `;
-        
         containerLista.appendChild(li);
-        
-        // Adiciona a linha divisória
-        const hr = document.createElement('hr');
-        hr.className = 'divider';
-        containerLista.appendChild(hr);
     });
+
+    // Enquadra a câmera em você e nas lojas, com uma margem para não ficar colado na borda
+    mapa.fitBounds(bounds, { padding: [50, 50] });
 }
 
-// =========================================================
-// Evento da Barra de Pesquisa
-// =========================================================
-const inputBusca = document.querySelector('.search-input');
-
-// Mudamos para 'keypress' (tecla Enter) para não ficar gastando
-// pesquisas na API gratuita cada vez que o usuário digita uma letra.
-inputBusca.addEventListener('keypress', (e) => {
+// CAPTURA O ENTER NA BARRA DE PESQUISA
+document.querySelector('.search-input').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        const termoBusca = e.target.value.trim();
-        if (termoBusca !== '') {
-            // Coloca um aviso visual na lista enquanto carrega
-            document.querySelector('.store-list').innerHTML = '<li>Buscando...</li>';
-            buscarNaApiExterna(termoBusca);
-        }
+        buscarLojasNoCSharp(e.target.value.trim());
     }
 });
 
-// Dá o start no mapa
+// Inicializa tudo
 iniciarMapa();
