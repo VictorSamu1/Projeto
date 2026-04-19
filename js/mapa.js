@@ -1,98 +1,131 @@
+const MAPTILER_KEY = 'u9koDxJJfDNTc50I8NTs';
+const ESTILO_MAPA = 'streets-v2'; 
+
 let mapa;
-let camadaLojas = L.layerGroup(); 
-// Posição padrão caso o GPS do usuário demore (Centro de BH)
-let posicaoUsuario = L.latLng(-19.9208, -43.9378); 
+let camadaLojas = L.layerGroup();
+// Posição inicial: Av. Nossa Senhora da Saúde
+let posicaoUsuario = L.latLng(-19.8656, -43.9108); 
+let marcadorVoce;
 
 function iniciarMapa() {
-    mapa = L.map('meuMapa').setView(posicaoUsuario, 13);
+    mapa = L.map('meuMapa').setView(posicaoUsuario, 15);
     
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
-        attribution: '© OpenStreetMap' 
+    L.tileLayer(`https://api.maptiler.com/maps/${ESTILO_MAPA}/256/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`, {
+        attribution: '&copy; MapTiler &copy; OpenStreetMap',
+        crossOrigin: true
     }).addTo(mapa);
     
     camadaLojas.addTo(mapa);
-
-    // Pede a localização real do usuário
-    mapa.locate({setView: true, maxZoom: 15});
-
-    mapa.on('locationfound', (e) => {
-        posicaoUsuario = e.latlng;
-        L.circleMarker(posicaoUsuario, { radius: 8, color: 'white', fillColor: '#007bff', fillOpacity: 1 })
-            .addTo(mapa)
-            .bindPopup("Você está aqui!")
-            .openPopup();
-    });
-
-    mapa.on('locationerror', () => {
-        console.warn("GPS negado ou indisponível. Usando localização padrão.");
-    });
+    atualizarMarcadorUsuario("Você está aqui!");
 }
 
-// CHAMA O C# ENVIANDO O TERMO E O GPS
-async function buscarLojasNoCSharp(termo) {
-    if (!termo) return;
+function atualizarMarcadorUsuario(texto) {
+    if (marcadorVoce) mapa.removeLayer(marcadorVoce);
+    marcadorVoce = L.circleMarker(posicaoUsuario, { radius: 10, color: 'white', fillColor: '#ff0000', fillOpacity: 1 })
+        .addTo(mapa)
+        .bindPopup(texto)
+        .openPopup();
+}
 
+// ==========================================
+// FUNÇÃO 1: Mudar a localização (Viajar pelo mapa)
+// ==========================================
+async function mudarLocalizacao(endereco) {
+    if (!endereco) return;
+    
     const containerLista = document.querySelector('.store-list');
-    containerLista.innerHTML = '<li>Pesquisando em toda Minas Gerais...</li>';
+    containerLista.innerHTML = '<li class="store-item">Viajando pelo mapa...</li>';
 
     try {
-        const url = `http://localhost:5125/api/buscar?termo=${encodeURIComponent(termo)}&lat=${posicaoUsuario.lat}&lng=${posicaoUsuario.lng}`;
-        const response = await fetch(url);
-        const lojasRecebidas = await response.json();
+        const response = await fetch(`http://localhost:5125/api/buscar-endereco?endereco=${encodeURIComponent(endereco)}`);
+        if (!response.ok) throw new Error();
         
-        processarResultados(lojasRecebidas);
-    } catch (erro) {
-        console.error("Erro no servidor:", erro);
-        containerLista.innerHTML = '<li>Erro ao conectar com o servidor C#. Verifique se ele está rodando.</li>';
+        const local = await response.json();
+        posicaoUsuario = L.latLng(local.lat, local.lng);
+        
+        mapa.flyTo(posicaoUsuario, 15);
+        atualizarMarcadorUsuario(`Ponto de Busca: ${local.nomeFormatado}`);
+        
+        camadaLojas.clearLayers();
+        containerLista.innerHTML = '<li class="store-item">Local encontrado! Agora digite a loja que procura.</li>';
+    } catch {
+        containerLista.innerHTML = '<li class="store-item" style="color:red;">Local não encontrado em Minas. Tente "Cidade, Bairro".</li>';
     }
 }
 
-// DESENHA NA TELA
-function processarResultados(lista) {
-    camadaLojas.clearLayers();
+// ==========================================
+// FUNÇÃO 2: Buscar lojas na posição atual
+// ==========================================
+async function buscarLojas(termo) {
+    if (!termo) return;
+    
     const containerLista = document.querySelector('.store-list');
-    containerLista.innerHTML = '';
+    containerLista.innerHTML = '<li class="store-item">Buscando na base de dados...</li>';
 
-    if (lista.length === 0) {
-        containerLista.innerHTML = '<li>Nada encontrado no estado de Minas Gerais.</li>';
-        return;
-    }
+    try {
+        const url = `http://localhost:5125/api/buscar-lojas?termo=${encodeURIComponent(termo)}&lat=${posicaoUsuario.lat}&lng=${posicaoUsuario.lng}`;
+        const response = await fetch(url);
+        const lojas = await response.json();
 
-    // A variável bounds guarda todas as coordenadas para a câmera ajustar o zoom no final
-    let bounds = [[posicaoUsuario.lat, posicaoUsuario.lng]];
-
-    lista.forEach(loja => {
-        // Cria o pino
-        const pino = L.marker([loja.lat, loja.lng])
-            .bindPopup(`<b>${loja.nome}</b><br><small>${loja.descricao}</small>`);
-        camadaLojas.addLayer(pino);
+        camadaLojas.clearLayers();
+        containerLista.innerHTML = '';
         
-        bounds.push([loja.lat, loja.lng]);
+        if (lojas.length === 0) {
+            containerLista.innerHTML = '<li class="store-item">Nenhuma loja encontrada nesta área.</li>';
+            return;
+        }
 
-        // Cria a lista lateral
-        const km = loja.distancia.toFixed(2);
-        const li = document.createElement('li');
-        li.className = 'store-item';
-        li.innerHTML = `
-            <div>
-                <strong>${loja.nome}</strong>
-                <small style="display:block; color:gray">${km} km de você</small>
-            </div>
-            <button class="btn-favorite" onclick="mapa.flyTo([${loja.lat}, ${loja.lng}], 17)">Ver no Mapa</button>
-        `;
-        containerLista.appendChild(li);
-    });
+        let bounds = [posicaoUsuario];
 
-    // Enquadra a câmera em você e nas lojas, com uma margem para não ficar colado na borda
-    mapa.fitBounds(bounds, { padding: [50, 50] });
+        lojas.forEach(l => {
+            const pino = L.marker([l.lat, l.lng]).bindPopup(`<b>${l.nome}</b><br><small>${l.endereco}</small>`);
+            camadaLojas.addLayer(pino);
+            bounds.push([l.lat, l.lng]);
+            
+            const li = document.createElement('li');
+            li.className = 'store-item';
+            // Usa o estilo que você já tinha no CSS
+            li.innerHTML = `
+                <div>
+                    <strong>${l.nome}</strong>
+                    <small style="display:block; color:gray; margin-top:5px;">📍 ${l.distancia.toFixed(2)} km de distância</small>
+                </div>
+            `;
+            
+            // Quando clica no item da lista, o mapa voa até ele
+            li.style.cursor = 'pointer';
+            li.onclick = () => {
+                mapa.flyTo([l.lat, l.lng], 18);
+                pino.openPopup();
+            };
+            
+            containerLista.appendChild(li);
+        });
+        
+        mapa.fitBounds(bounds, { padding: [50, 50] });
+    } catch {
+        containerLista.innerHTML = '<li class="store-item" style="color:red;">Erro ao conectar com o servidor.</li>';
+    }
 }
 
-// CAPTURA O ENTER NA BARRA DE PESQUISA
-document.querySelector('.search-input').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        buscarLojasNoCSharp(e.target.value.trim());
+// ==========================================
+// EVENTOS: Interação do usuário (Apertar Enter)
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const inputLocal = document.getElementById('inputLocal');
+    const inputLoja = document.getElementById('inputLoja');
+
+    if (inputLocal) {
+        inputLocal.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') mudarLocalizacao(e.target.value.trim());
+        });
+    }
+
+    if (inputLoja) {
+        inputLoja.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') buscarLojas(e.target.value.trim());
+        });
     }
 });
 
-// Inicializa tudo
 iniciarMapa();
