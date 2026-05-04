@@ -1,0 +1,19 @@
+# ==========================================
+# IGNORAR PASTAS PESADAS DO C#
+# ==========================================
+c#/bin/
+c#/obj/
+c#/appsettings.Development.json
+
+# ==========================================
+# IGNORAR SENHAS E CONFIGURAÇÕES LOCAIS (A SUA CHAVE DA IA)
+# ==========================================
+appsettings.Development.json
+appsettings.*.json
+*.env
+
+# ==========================================
+# IGNORAR LIXO DO SISTEMA OPERACIONAL
+# ==========================================
+.DS_Store
+Thumbs.db
