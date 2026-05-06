@@ -18,3 +18,4 @@ app.MapGet("/api/lojas", () => {
 });
 
 app.Run();
+app.RegistrarMinas();
