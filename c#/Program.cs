@@ -34,10 +34,10 @@ app.MapGet("/api/buscar", async (string termo, double lat, double lng, HttpClien
     var prompt = $@"O usuário pesquisou por: '{termo}'.
 Sua tarefa é traduzir isso para UMA tag oficial do OpenStreetMap.
 Exemplos de tags do OSM:
-- Padaria, pão -> shop=bakery
-- Farmácia, remédio -> amenity=pharmacy
-- Supermercado -> shop=supermarket
-- Restaurante -> amenity=restaurant
+- Padaria, pão, nome aleatorio + padaria,nome aleatorio + padaria ou nome aleatorio que quando pesquisa no google é uma padaria  -> shop=bakery
+- Farmácia, remédio, nome aleatorio + Farmácia -> amenity=pharmacy
+- Supermercado , hipermercado, nome aleatorio + Supermercado -> shop=supermarket
+- Restaurante, lachonete -> amenity=restaurant
 - Bar, pub -> amenity=bar
 - Mecânico -> shop=car_repair
 - Chaveiro -> craft=key_cutter
