@@ -14,8 +14,26 @@ app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.MapGet("/api/buscar-endereco", async (string endereco, HttpClient http, IConfiguration config) => {
     var apiKey = config["TomTomApiKey"];
     
-    // Força a busca dentro do Brasil
-    var url = $"https://api.tomtom.com/search/2/geocode/{Uri.EscapeDataString(endereco)}.json?key={apiKey}&countrySet=BR&limit=1";
+    var apiKey = config["GeminiApiKey"];
+    if(string.IsNullOrWhiteSpace(termo)) return Results.Ok(new object[0]);
+
+    // =========================================================
+    // 1. IA TRADUZ PARA TAGS OFICIAIS DO OPENSTREETMAP
+    // =========================================================
+    var prompt = $@"O usuário pesquisou por: '{termo}'.
+Sua tarefa é traduzir isso para UMA tag oficial do OpenStreetMap.
+Exemplos de tags do OSM:
+- Padaria, pão, nome aleatorio + padaria,nome aleatorio + padaria ou nome aleatorio que quando pesquisa no google é uma padaria  -> shop=bakery
+- Farmácia, remédio, nome aleatorio + Farmácia -> amenity=pharmacy
+- Supermercado , hipermercado, nome aleatorio + Supermercado -> shop=supermarket
+- Restaurante, lachonete -> amenity=restaurant
+- Bar, pub -> amenity=bar
+- Mecânico -> shop=car_repair
+- Chaveiro -> craft=key_cutter
+Responda APENAS com a chave e o valor no formato chave=valor (ex: shop=bakery). Se não souber, use shop=supermarket.";
+
+    var requestBody = new { contents = new[] { new { parts = new[] { new { text = prompt } } } } };
+    var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
     
     try {
         var response = await http.GetAsync(url);
