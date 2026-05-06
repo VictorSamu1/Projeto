@@ -27,7 +27,16 @@
         </section>
 
         <aside class="map-sidebar">
-            <input type="text" class="search-input" placeholder="Buscar loja, categoria ou local...">
+            
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 0.85em; font-weight: bold; color: #555; margin-bottom: 5px; display: block;">1. Onde você está?</label>
+                <input type="text" id="inputLocal" class="search-input" placeholder="Ex: Av. Afonso Pena, BH... (Aperte Enter)">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="font-size: 0.85em; font-weight: bold; color: #555; margin-bottom: 5px; display: block;">2. O que procura?</label>
+                <input type="text" id="inputLoja" class="search-input" placeholder="Ex: Padaria, Farmácia... (Aperte Enter)">
+            </div>
             
             <div class="sidebar-content">
                 <h3>Lojas Próximas</h3>
