@@ -8,46 +8,53 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 
-    <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/map.css">
 </head>
 <body>
-    <header class="main-header">
-        <h1>Explore o Mapa</h1>
-        <nav class="main-nav">
-            <a href="index.html">Home</a>
-            <a href="noticias.html">Notícias</a>
-            <a href="mapa.html">Mapa</a>
-        </nav>
+    <header>
+        <img src="imagenslojas/logo.png" alt="Logo" class="logo">
+        <div class="header-inner">
+            <h1>Aqui é bão, Uai!!</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="noticias.html">Notícias</a>
+                <a href="mapa.html">Mapa</a>
+            </nav>
+            
+            <div class="header-actions-map">
+                <div class="search-box">
+                    <input type="text" id="inputLocal" class="search-input" placeholder="1. Onde você está? (Ex: BH...)">
+                </div>
+                <div class="search-box">
+                    <input type="text" id="inputLoja" class="search-input" placeholder="2. O que procura? (Ex: Padaria...)">
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main class="map-container">
+    <main class="container map-container">
+        
         <section class="map-wrapper">
             <div id="meuMapa"></div>
         </section>
 
         <aside class="map-sidebar">
-            
-            <div style="margin-bottom: 15px;">
-                <label style="font-size: 0.85em; font-weight: bold; color: #555; margin-bottom: 5px; display: block;">1. Onde você está?</label>
-                <input type="text" id="inputLocal" class="search-input" placeholder="Ex: Av. Afonso Pena, BH... (Aperte Enter)">
-            </div>
-
-            <div style="margin-bottom: 20px;">
-                <label style="font-size: 0.85em; font-weight: bold; color: #555; margin-bottom: 5px; display: block;">2. O que procura?</label>
-                <input type="text" id="inputLoja" class="search-input" placeholder="Ex: Padaria, Farmácia... (Aperte Enter)">
-            </div>
-            
             <div class="sidebar-content">
                 <h3>Lojas Próximas</h3>
                 <ul class="store-list">
                     <li class="store-item">
-                        <span>Use o mapa para explorar</span>
+                        <span>Use a pesquisa no topo para explorar.</span>
                     </li>
                 </ul>
             </div>
         </aside>
+
     </main>
+
+    <footer>
+        <p>Contato: (31) 9999-9999 | contato@aquiebao.com.br</p> 
+        <p>2026 - Aqui é bão, Uai!!</p> 
+    </footer>
 
     <script src="js/mapa.js"></script>
 </body>

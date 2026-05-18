@@ -84,12 +84,14 @@ async function buscarLojas(termo) {
             
             const li = document.createElement('li');
             li.className = 'store-item';
-            // Usa o estilo que você já tinha no CSS
+            
+            // O NOVO VISUAL COM O BOTÃO VERMELHO
             li.innerHTML = `
                 <div>
                     <strong>${l.nome}</strong>
                     <small style="display:block; color:gray; margin-top:5px;">📍 ${l.distancia.toFixed(2)} km de distância</small>
                 </div>
+                <button class="btn-favorite" onclick="mapa.flyTo([${l.lat}, ${l.lng}], 18); event.stopPropagation();">Ver no Mapa</button>
             `;
             
             // Quando clica no item da lista, o mapa voa até ele
