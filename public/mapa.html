@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa - Aqui é bão, Uai!!</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+
+    <link rel="stylesheet" href="CSS/map.css">
+</head>
+<body>
+    <header>
+        <img src="imagenslojas/logo.png" alt="Logo" class="logo">
+        <div class="header-inner">
+            <h1>Aqui é bão, Uai!!</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="noticias.html">Notícias</a>
+                <a href="mapa.html">Mapa</a>
+            </nav>
+            
+            <div class="header-actions-map">
+                <div class="search-box">
+                    <input type="text" id="inputLocal" class="search-input" placeholder="1. Onde você está? (Ex: BH...)">
+                </div>
+                <div class="search-box">
+                    <input type="text" id="inputLoja" class="search-input" placeholder="2. O que procura? (Ex: Padaria...)">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container map-container">
+        
+        <section class="map-wrapper">
+            <div id="meuMapa"></div>
+        </section>
+
+        <aside class="map-sidebar">
+            <div class="sidebar-content">
+                <h3>Lojas Próximas</h3>
+                <ul class="store-list">
+                    <li class="store-item">
+                        <span>Use a pesquisa no topo para explorar.</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+    </main>
+
+    <footer>
+        <p>Contato: (31) 9999-9999 | contato@aquiebao.com.br</p> 
+        <p>2026 - Aqui é bão, Uai!!</p> 
+    </footer>
+
+    <script src="js/mapa.js"></script>
+</body>
+</html>
