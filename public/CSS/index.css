@@ -367,4 +367,154 @@ main h2 {
     .top-accounts::before {
         margin-bottom: 10px;
     }
+    /* ==========================================================================
+   6. COMPONENTE: CARD DA LOJA (.item-card)
+   ========================================================================== */
+.item-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* Proporção equilibrada entre imagem e info */
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 28px;
+    border: 1px solid rgba(255, 107, 121, 0.16);
+    overflow: hidden;
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.08);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease;
+    padding: 16px; /* Espaçamento interno para os blocos respirarem */
+    align-items: center; /* Centraliza verticalmente os blocos da direita em relação à imagem */
+}
+
+.item-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.14);
+    border-color: rgba(255, 86, 105, 0.22);
+}
+
+/* Título flutuante sobre a imagem */
+.item-title {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    width: auto;
+    max-width: 80%;
+    padding: 12px 20px;
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--color-primary-dark);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.10);
+    z-index: 2;
+}
+
+/* Imagem da Loja */
+.store-image {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    max-height: 480px;
+    object-fit: cover;
+    border-radius: 20px; /* Bordas arredondadas internas para combinar com o mockup */
+    display: block;
+    filter: saturate(1.06);
+}
+
+/* Container que agrupa a lateral direita e centraliza os blocos verticalmente */
+.item-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+}
+
+/* Bloco de Perfis (Top Accounts) */
+.top-accounts {
+    display: flex;
+    gap: 12px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center; /* Centraliza os perfis horizontalmente */
+    background: #fdfdfd;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 163, 175, 0.25);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.top-accounts img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Bloco de Descrição */
+.item-description {
+    padding: 24px;
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    background: #fdfdfd;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 182, 193, 0.22);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    text-align: center; /* Opcional: centraliza o texto da descrição */
+}
+
+/* Destaque para preço / botão */
+.price-tag { font-weight: 700; color: var(--color-primary); font-size: 1.25rem; }
+.buy-btn { background: linear-gradient(90deg, var(--color-primary), #ff9fb3); color: #fff; padding: 10px 14px; border-radius: 10px; border: none; cursor: pointer; transition: transform 160ms ease, box-shadow 160ms ease; }
+.buy-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(255, 160, 175, 0.18); }
+
+/* ==========================================================================
+   7. RESPONSIVIDADE (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 880px) {
+    .item-card {
+        grid-template-columns: 1fr; /* Vira uma coluna só em telas pequenas */
+        padding: 12px;
+    }
+    
+    .store-image {
+        min-height: 280px;
+    }
+
+    .item-title {
+        position: absolute;
+        top: 24px;
+        left: 24px;
+    }
+}
+/* Bloco de Perfis (Top Accounts) */
+.top-accounts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px; /* Aumentado para 18px para afastar os perfis uns dos outros */
+    padding: 22px;
+    align-items: center;
+    justify-content: center; /* Centraliza os perfis horizontalmente */
+    background: #fdfdfd;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 163, 175, 0.25);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.top-accounts img {
+    width: 100px; /* Aumentado de 32px para 46px (fotos maiores) */
+    height: 100px; /* Aumentado de 32px para 46px (fotos maiores) */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.top-accounts img:hover {
+    transform: scale(1.08); /* Efeito sutil de zoom ao passar o mouse */
+}
 }
