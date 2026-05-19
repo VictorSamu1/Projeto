@@ -1,4 +1,5 @@
 /* Container que segura os dois lados */
+
 .map-container {
     display: flex;
     gap: 20px;

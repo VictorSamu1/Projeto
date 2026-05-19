@@ -1,221 +1,10 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Aqui é bão, Uai!! - Home</title>
-    <style>
-        :root {
-            color-scheme: light;
-            font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-            font-weight: 400;
-            line-height: 1.6;
-            background-color: #f4f4f8;
-            color: #2b2b2b;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: linear-gradient(180deg, #f9f6f2 0%, #f4f4f8 100%);
-        }
-
-        header {
-            background: linear-gradient(135deg, #FF0000 0%, #FF0000 100%);
-            color: #fff;
-            padding: 24px 16px;
-
-            position: relative;
-        }
-
-        .logo {
-            position: absolute;
-            top: 32px;
-            left: 4%;
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 18px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: clamp(1.8rem, 2.5vw, 3rem);
-            line-height: 1.1;
-            font-family: Georgia, serif;
-        }
-
-        nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.16);
-            transition: background 0.2s ease, transform 0.2s ease;
-            font-family: Georgia, serif;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            background: rgba(255, 255, 255, 0.32);
-            transform: translateY(-1px);
-        }
-
-        .header-actions {
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .search-box {
-            position: relative;
-            width: min(100%, 420px);
-        }
-
-        .search-box::before {
-            content: "\1F50D";
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #c0392b;
-            font-size: 1rem;
-            pointer-events: none;
-        }
-
-        .header-actions input {
-            width: 100%;
-            border: none;
-            border-radius: 999px;
-            padding: 14px 18px 14px 46px;
-            min-width: 220px;
-            font-size: 1rem;
-            outline: none;
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
-        }
-
-        .header-actions input:focus {
-            transform: translateY(-1px);
-            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            background: #fff;
-        }
-
-        .filters {
-            max-width: 1200px;
-            margin: 20px auto 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .filters select,
-        .filters input {
-            border: none;
-            border-radius: 999px;
-            padding: 14px 18px;
-            min-width: 220px;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .filters select {
-            background: #fff;
-            color: #333;
-        }
-
-        .filters input {
-            flex: 1;
-            min-width: 260px;
-            background: #fff;
-        }
-
-        main.container {
-            max-width: 1200px;
-            margin: 36px auto;
-            padding: 0 16px;
-        }
-
-        main h2 {
-            margin-bottom: 24px;
-            font-size: clamp(1.6rem, 2vw, 2.4rem);
-            color: #FF0000;
-        }
-
-        .grid-lojas {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .item-card {
-            display: block;
-            background: #ffffff;
-            border-radius: 24px;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .item-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 24px 45px rgba(0, 0, 0, 0.12);
-        }
-
-        .item-card img {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-            display: block;
-        }
-
-        .item-card h3 {
-            margin: 0;
-            padding: 18px;
-            font-size: 1.1rem;
-            letter-spacing: 0.02em;
-        }
-
-        footer {
-            background: #222;
-            color: #ddd;
-            text-align: center;
-            padding: 20px 16px;
-            font-size: 0.95rem;
-        }
-
-        footer p {
-            margin: 8px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/index.css">
 </head>
 <body>
     <header>
@@ -241,17 +30,111 @@
         <h2>Principais Lojas Tradicionais de Minas</h2>
         <div class="grid-lojas">
 
-            <a href="https://mercadocentral.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;"><img src="imagenslojas/loja1.jfif" alt="Loja"><h3>Mercado Central de BH</h3></a>
-            <a href="https://galeriaouvidorbh.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;"><img src="imagenslojas/loja2.jpg" alt="Loja"><h3>Galeria do Ouvidor BH</h3></a>
-            <a href="https://www.diamondmall.com.br/lojas/" target="_blank" class="item-card" style="border: 2px solid #FF0000;"><img src="imagenslojas/loja3.jpg" alt="Loja"><h3>DiamondMall</h3></a>
-            <a href="https://www.bhshopping.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;"><img src="imagenslojas/loja4.jpg" alt="Loja"><h3>BH Shopping</h3></a>
-            <a href="https://rocacapital.com.br/?srsltid=AfmBOopl7Lrw3UANlMUR0MotbEZkUKBVzqBu1xahTM63oKsHdwY7J8QE" target="_blank" class="item-card" style="border: 2px solid #FF0000;"><img src="imagenslojas/loja5.jpg" alt="Loja"><h3>Roça Capital</h3></a>
-            <a href="https://feirahippiedebh.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;"><img src="imagenslojas/loja6.jpg" alt="Loja"><h3>Feira Hippie</h3></a>
-            <a href="https://feiraminas.com/" target="_blank" class="item-card" style="border: 2px solid #FF0000;"><img src="imagenslojas/loja7.jpg" alt="Loja"><h3>Feiraminas</h3></a>
-            <a href="https://atacarejaodolar.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;"><img src="imagenslojas/loja8.jpg" alt="Loja"><h3>Atacarejão do Lar</h3></a>
+            <a href="https://mercadocentral.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#1 Mercado Central de BH</h3>
+                <img class="store-image" src="imagenslojas/loja1.jfif" alt=" Mercado Central de BH">
+                <p class="item-description">Um dos destinos mais tradicionais de BH, com alimentos típicos, artesanato e sabores mineiros.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
+            <a href="https://galeriaouvidorbh.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#2 Galeria do Ouvidor BH</h3>
+                <img class="store-image" src="imagenslojas/loja2.jpg" alt="Galeria do Ouvidor BH">
+                <p class="item-description">Ponto cultural famoso por lojas de moda, decoração e artesanato no centro de Belo Horizonte.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
+            <a href="https://www.diamondmall.com.br/lojas/" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#3 DiamondMall</h3>
+                <img class="store-image" src="imagenslojas/loja3.jpg" alt="DiamondMall">
+                <p class="item-description">Shopping moderno com marcas nacionais e internacionais, restaurantes e entretenimento.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
+            <a href="https://www.bhshopping.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#4 BH Shopping</h3>
+                <img class="store-image" src="imagenslojas/loja4.jpg" alt="BH Shopping">
+                <p class="item-description">Um dos maiores shoppings da região, com uma grande variedade de lojas, lazer e alimentação.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
+            <a href="https://rocacapital.com.br/?srsltid=AfmBOopl7Lrw3UANlMUR0MotbEZkUKBVzqBu1xahTM63oKsHdwY7J8QE" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#5 Roça Capital</h3>
+                <img class="store-image" src="imagenslojas/loja5.jpg" alt="Roça Capital">
+                <p class="item-description">Espaço com culinária mineira, produtos rurais e ambiente acolhedor que atrai muitas visitas.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
+            <a href="https://feirahippiedebh.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#6 Feira Hippie</h3>
+                <img class="store-image" src="imagenslojas/loja6.jpg" alt="Feira Hippie">
+                <p class="item-description">Feira ao ar livre com artesanato, roupas e comidas típicas, muito visitada por turistas e moradores.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
+            <a href="https://feiraminas.com/" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#7 Feiraminas</h3>
+                <img class="store-image" src="imagenslojas/loja7.jpg" alt="Feiraminas">
+                <p class="item-description">Mercado popular com variedades de alimentos, plantas e produtos regionais, sempre muito visitado.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
+            <a href="https://atacarejaodolar.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#8 Atacarejão do Lar</h3>
+                <img class="store-image" src="imagenslojas/loja8.jpg" alt="Atacarejão do Lar">
+                <p class="item-description">Supermercado com ofertas para o lar e grande fluxo de clientes, ideal para compras de atacado.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
+             <a href="https://www.ceartmg.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#9 ceart</h3>
+                <img class="store-image" src="imagenslojas/loja9.jpg" alt="Roça Capital">
+                <p class="item-description">Espaço com culinária mineira, produtos rurais e ambiente acolhedor que atrai muitas visitas.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
+            <a href="https://www.voolivia.com.br/" target="_blank" class="item-card" style="border: 2px solid #FF0000;">
+                <h3 class="item-title">#10 Empório Vó Olívia</h3>
+                <img class="store-image" src="imagenslojas/loja10.jpeg" alt="Roça Capital">
+                <p class="item-description">Espaço com culinária mineira, produtos rurais e ambiente acolhedor que atrai muitas visitas.</p>
+                <div class="top-accounts">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 1">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 2">
+                    <img src="imagenslojas/perfil.webp" alt="Conta mais visitada 3">
+                </div>
+            </a>
 
         </div>
     </main>
 
     <footer>
         <p>Contato: (31) 9999-9999 | contato@aquiebao.com.br</p> <p>2026 - Aqui é bão, Uai!!</p> </footer>
+</body>
+</html>
