@@ -9,13 +9,40 @@ var app = builder.Build();
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 // =================================================================
+<<<<<<< HEAD
 // ROTA 1: BUSCAR ENDEREÇO (Mudar de cidade/bairro em Minas)
+=======
+// ROTA 1: BUSCAR ENDEREÇO (Para mudar de cidade/bairro em Minas)
+>>>>>>> 99c4a1021ebb740abd342b620c4a0422417aa526
 // =================================================================
 app.MapGet("/api/buscar-endereco", async (string endereco, HttpClient http, IConfiguration config) => {
     var apiKey = config["TomTomApiKey"];
     
+<<<<<<< HEAD
     // Força a busca dentro do Brasil
     var url = $"https://api.tomtom.com/search/2/geocode/{Uri.EscapeDataString(endereco)}.json?key={apiKey}&countrySet=BR&limit=1";
+=======
+    var apiKey = config["GeminiApiKey"];
+    if(string.IsNullOrWhiteSpace(termo)) return Results.Ok(new object[0]);
+
+    // =========================================================
+    // 1. IA TRADUZ PARA TAGS OFICIAIS DO OPENSTREETMAP
+    // =========================================================
+    var prompt = $@"O usuário pesquisou por: '{termo}'.
+Sua tarefa é traduzir isso para UMA tag oficial do OpenStreetMap.
+Exemplos de tags do OSM:
+- Padaria, pão, nome aleatorio + padaria,nome aleatorio + padaria ou nome aleatorio que quando pesquisa no google é uma padaria  -> shop=bakery
+- Farmácia, remédio, nome aleatorio + Farmácia -> amenity=pharmacy
+- Supermercado , hipermercado, nome aleatorio + Supermercado -> shop=supermarket
+- Restaurante, lachonete -> amenity=restaurant
+- Bar, pub -> amenity=bar
+- Mecânico -> shop=car_repair
+- Chaveiro -> craft=key_cutter
+Responda APENAS com a chave e o valor no formato chave=valor (ex: shop=bakery). Se não souber, use shop=supermarket.";
+
+    var requestBody = new { contents = new[] { new { parts = new[] { new { text = prompt } } } } };
+    var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+>>>>>>> 99c4a1021ebb740abd342b620c4a0422417aa526
     
     try {
         var response = await http.GetAsync(url);
@@ -35,7 +62,11 @@ app.MapGet("/api/buscar-endereco", async (string endereco, HttpClient http, ICon
 });
 
 // =================================================================
+<<<<<<< HEAD
 // ROTA 2: BUSCAR LOJAS/POIs (Perto da posição atual do usuário)
+=======
+// ROTA 2: BUSCAR LOJAS/POIs (Usando a coordenada atual do usuário)
+>>>>>>> 99c4a1021ebb740abd342b620c4a0422417aa526
 // =================================================================
 app.MapGet("/api/buscar-lojas", async (string termo, double lat, double lng, HttpClient http, IConfiguration config) => {
     var apiKey = config["TomTomApiKey"];
@@ -66,4 +97,9 @@ app.MapGet("/api/buscar-lojas", async (string termo, double lat, double lng, Htt
     } catch { return Results.Ok(new object[0]); }
 });
 
+<<<<<<< HEAD
 app.Run();
+=======
+app.Run();
+app.RegistrarMinas();
+>>>>>>> 99c4a1021ebb740abd342b620c4a0422417aa526
