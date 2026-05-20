@@ -6,12 +6,13 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 // 1. CONFIGURAÇÃO DO FIREBASE (Cole suas chaves reais aqui)
 // =====================================================================
 const firebaseConfig = {
-    apiKey: "SUA_API_KEY_AQUI",
-    authDomain: "SEU_PROJETO.firebaseapp.com",
-    projectId: "SEU_PROJETO",
-    storageBucket: "SEU_PROJETO.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "SEU_APP_ID"
+    apiKey: "AIzaSyBuNZz1ZUOPbM-yD96-ps27NvD-CWN5GBo",
+  authDomain: "aquiebomuai.firebaseapp.com",
+  projectId: "aquiebomuai",
+  storageBucket: "aquiebomuai.firebasestorage.app",
+  messagingSenderId: "884861885387",
+  appId: "1:884861885387:web:682f42e9ed2c8f5c2ff44e",
+  measurementId: "G-2HN8PB8CBG"
 };
 
 // Inicializa o Firebase
