@@ -8,20 +8,13 @@ builder.Services.AddHttpClient();
 var app = builder.Build();
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-// =================================================================
-<<<<<<< HEAD
 // ROTA 1: BUSCAR ENDEREÇO (Mudar de cidade/bairro em Minas)
 =======
-// ROTA 1: BUSCAR ENDEREÇO (Para mudar de cidade/bairro em Minas)
->>>>>>> 99c4a1021ebb740abd342b620c4a0422417aa526
+
 // =================================================================
 app.MapGet("/api/buscar-endereco", async (string endereco, HttpClient http, IConfiguration config) => {
     var apiKey = config["TomTomApiKey"];
     
-<<<<<<< HEAD
-    // Força a busca dentro do Brasil
-    var url = $"https://api.tomtom.com/search/2/geocode/{Uri.EscapeDataString(endereco)}.json?key={apiKey}&countrySet=BR&limit=1";
-=======
     var apiKey = config["GeminiApiKey"];
     if(string.IsNullOrWhiteSpace(termo)) return Results.Ok(new object[0]);
 
@@ -42,7 +35,6 @@ Responda APENAS com a chave e o valor no formato chave=valor (ex: shop=bakery). 
 
     var requestBody = new { contents = new[] { new { parts = new[] { new { text = prompt } } } } };
     var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
->>>>>>> 99c4a1021ebb740abd342b620c4a0422417aa526
     
     try {
         var response = await http.GetAsync(url);
@@ -62,11 +54,7 @@ Responda APENAS com a chave e o valor no formato chave=valor (ex: shop=bakery). 
 });
 
 // =================================================================
-<<<<<<< HEAD
 // ROTA 2: BUSCAR LOJAS/POIs (Perto da posição atual do usuário)
-=======
-// ROTA 2: BUSCAR LOJAS/POIs (Usando a coordenada atual do usuário)
->>>>>>> 99c4a1021ebb740abd342b620c4a0422417aa526
 // =================================================================
 app.MapGet("/api/buscar-lojas", async (string termo, double lat, double lng, HttpClient http, IConfiguration config) => {
     var apiKey = config["TomTomApiKey"];
@@ -97,9 +85,4 @@ app.MapGet("/api/buscar-lojas", async (string termo, double lat, double lng, Htt
     } catch { return Results.Ok(new object[0]); }
 });
 
-<<<<<<< HEAD
 app.Run();
-=======
-app.Run();
-app.RegistrarMinas();
->>>>>>> 99c4a1021ebb740abd342b620c4a0422417aa526
