@@ -13,13 +13,34 @@
     box-sizing: border-box;
 }
 
+/* O gradiente veio para o html para a imagem não ficar escondida */
+html {
+    background: linear-gradient(180deg, #f9f6f2 0%, #f4f4f8 100%);
+}
+
 body {
     margin: 0;
-    background: linear-gradient(180deg, #f9f6f2 0%, #f4f4f8 100%);
     color: #2b2b2b;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative; /* Necessário para segurar a imagem de fundo */
+}
+
+/* --- IMAGEM DE FUNDO COM OPACIDADE 0.75 --- */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../imagens_geral/fundo_site.png');
+    background-repeat: repeat;
+    background-size: 400px;
+    opacity: 0.75; 
+    z-index: -1; 
+    pointer-events: none; 
 }
 
 /* --- CABEÇALHO --- */
