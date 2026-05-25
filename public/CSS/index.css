@@ -517,4 +517,30 @@ main h2 {
 .top-accounts img:hover {
     transform: scale(1.08); /* Efeito sutil de zoom ao passar o mouse */
 }
+/* --- CONTROLE DE OPACIDADE DA IMAGEM DE FUNDO --- */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../imagens_geral/fundo_site.png');
+    background-repeat: repeat;
+    background-size: 400px;
+    
+    /* Pode ajustar a opacidade aqui (0.15 = 15%) */
+    opacity: 0.75; 
+    
+    z-index: -1; 
+    pointer-events: none; 
+}
+footer {
+    background: #000000;
+    color: #ddd;
+    text-align: center;
+    padding: 20px 16px;
+    font-size: 0.95rem;
+    margin-top: auto;
+}
 }
