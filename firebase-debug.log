@@ -1,0 +1,96 @@
+[debug] [2026-05-19T00:32:06.850Z] ----------------------------------------------------------------------
+[debug] [2026-05-19T00:32:06.853Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Brayan Henrique\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2026-05-19T00:32:06.854Z] CLI Version:   15.18.0
+[debug] [2026-05-19T00:32:06.854Z] Platform:      win32
+[debug] [2026-05-19T00:32:06.854Z] Node Version:  v22.20.0
+[debug] [2026-05-19T00:32:06.854Z] Time:          Mon May 18 2026 21:32:06 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2026-05-19T00:32:06.854Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-05-19T00:32:08.552Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-05-19T00:32:08.552Z] > authorizing via signed-in user (brayan.henrique200808@gmail.com)
+[debug] [2026-05-19T00:32:08.552Z] [iam] checking project aquiebomuai for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-05-19T00:32:08.553Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:08.554Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:08.554Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions [none]
+[debug] [2026-05-19T00:32:08.555Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions  x-goog-user-project=aquiebomuai
+[debug] [2026-05-19T00:32:08.555Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-05-19T00:32:09.644Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions 200
+[debug] [2026-05-19T00:32:09.645Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-05-19T00:32:09.646Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:09.646Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:09.647Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/aquiebomuai [none]
+[debug] [2026-05-19T00:32:10.172Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/aquiebomuai 200
+[debug] [2026-05-19T00:32:10.172Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/aquiebomuai {"projectId":"aquiebomuai","projectNumber":"884861885387","displayName":"Aquiebomuai","name":"projects/aquiebomuai","resources":{"hostingSite":"aquiebomuai"},"state":"ACTIVE","etag":"1_e80d8620-20d0-4618-9196-f00b66978168"}
+[info] 
+[info] === Deploying to 'aquiebomuai'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-05-19T00:32:10.176Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:10.176Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:10.176Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/aquiebomuai/sites/aquiebomuai [none]
+[debug] [2026-05-19T00:32:12.310Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/aquiebomuai/sites/aquiebomuai 200
+[debug] [2026-05-19T00:32:12.311Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/aquiebomuai/sites/aquiebomuai {"name":"projects/aquiebomuai/sites/aquiebomuai","defaultUrl":"https://aquiebomuai.web.app","type":"DEFAULT_SITE"}
+[debug] [2026-05-19T00:32:12.320Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:12.320Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:12.320Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/aquiebomuai/versions [none]
+[debug] [2026-05-19T00:32:12.321Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/aquiebomuai/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2026-05-19T00:32:15.640Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/aquiebomuai/versions 200
+[debug] [2026-05-19T00:32:15.641Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/aquiebomuai/versions {"name":"projects/884861885387/sites/aquiebomuai/versions/14a5e33536b5197e","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[aquiebomuai]: beginning deploy... 
+[info] i  hosting[aquiebomuai]: found 26 files in public 
+[debug] [2026-05-19T00:32:15.693Z] [hosting] uploading with 200 concurrency
+[debug] [2026-05-19T00:32:15.695Z] [hosting] hash cache [cHVibGlj] not populated
+[debug] [2026-05-19T00:32:15.714Z] Error: EISDIR: illegal operation on a directory, read
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-05-19T00:32:15.716Z] Error: EISDIR: illegal operation on a directory, read
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-05-19T00:32:34.587Z] ----------------------------------------------------------------------
+[debug] [2026-05-19T00:32:34.590Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Brayan Henrique\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2026-05-19T00:32:34.590Z] CLI Version:   15.18.0
+[debug] [2026-05-19T00:32:34.591Z] Platform:      win32
+[debug] [2026-05-19T00:32:34.591Z] Node Version:  v22.20.0
+[debug] [2026-05-19T00:32:34.591Z] Time:          Mon May 18 2026 21:32:34 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2026-05-19T00:32:34.591Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-05-19T00:32:36.156Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-05-19T00:32:36.157Z] > authorizing via signed-in user (brayan.henrique200808@gmail.com)
+[debug] [2026-05-19T00:32:36.157Z] [iam] checking project aquiebomuai for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-05-19T00:32:36.158Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:36.159Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:36.160Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions [none]
+[debug] [2026-05-19T00:32:36.160Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions  x-goog-user-project=aquiebomuai
+[debug] [2026-05-19T00:32:36.160Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-05-19T00:32:37.140Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions 200
+[debug] [2026-05-19T00:32:37.140Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aquiebomuai:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-05-19T00:32:37.141Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:37.141Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:37.142Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/aquiebomuai [none]
+[debug] [2026-05-19T00:32:37.613Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/aquiebomuai 200
+[debug] [2026-05-19T00:32:37.613Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/aquiebomuai {"projectId":"aquiebomuai","projectNumber":"884861885387","displayName":"Aquiebomuai","name":"projects/aquiebomuai","resources":{"hostingSite":"aquiebomuai"},"state":"ACTIVE","etag":"1_e80d8620-20d0-4618-9196-f00b66978168"}
+[info] 
+[info] === Deploying to 'aquiebomuai'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-05-19T00:32:37.625Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:37.625Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:37.626Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/aquiebomuai/sites/aquiebomuai [none]
+[debug] [2026-05-19T00:32:38.908Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/aquiebomuai/sites/aquiebomuai 200
+[debug] [2026-05-19T00:32:38.909Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/aquiebomuai/sites/aquiebomuai {"name":"projects/aquiebomuai/sites/aquiebomuai","defaultUrl":"https://aquiebomuai.web.app","type":"DEFAULT_SITE"}
+[debug] [2026-05-19T00:32:38.918Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:38.918Z] Checked if tokens are valid: true, expires at: 1779153135431
+[debug] [2026-05-19T00:32:38.919Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/aquiebomuai/versions [none]
+[debug] [2026-05-19T00:32:38.919Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/aquiebomuai/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2026-05-19T00:32:39.942Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/aquiebomuai/versions 200
+[debug] [2026-05-19T00:32:39.942Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/aquiebomuai/versions {"name":"projects/884861885387/sites/aquiebomuai/versions/111c09e8d13f9ccc","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[aquiebomuai]: beginning deploy... 
+[info] i  hosting[aquiebomuai]: found 26 files in public 
+[debug] [2026-05-19T00:32:39.993Z] [hosting] uploading with 200 concurrency
+[debug] [2026-05-19T00:32:39.994Z] [hosting] hash cache [cHVibGlj] not populated
+[debug] [2026-05-19T00:32:40.024Z] Error: EISDIR: illegal operation on a directory, read
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-05-19T00:32:40.026Z] Error: EISDIR: illegal operation on a directory, read
+[error] 
+[error] Error: An unexpected error has occurred.

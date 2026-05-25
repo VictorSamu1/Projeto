@@ -11,7 +11,7 @@ c#/appsettings.Development.json
 appsettings.Development.json
 appsettings.*.json
 *.env
-
+node_modules
 # ==========================================
 # IGNORAR LIXO DO SISTEMA OPERACIONAL
 # ==========================================
