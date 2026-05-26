@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "6nt9FeXAYzM=",
+  "dgSpecHash": "RG4y7GAVFHA=",
   "success": true,
   "projectFilePath": "C:\\Projeto\\c#\\c#.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Victor\\.nuget\\packages\\system.servicemodel.syndication\\10.0.8\\system.servicemodel.syndication.10.0.8.nupkg.sha512"
+  ],
   "logs": []
 }
