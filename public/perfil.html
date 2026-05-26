@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Aqui é bão, Uai!!</title>
+    
+    <link rel="stylesheet" href="CSS/perfil.css">
+</head>
+<body>
+
+    <header>
+        <img src="imagenslojas/logo.png" alt="Logo" class="logo">
+        <div class="header-inner">
+            <h1>Aqui é bão, Uai!!</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="noticias.html">Notícias</a>
+                <a href="mapa.html">Mapa</a>
+            </nav>
+        </div>
+
+        <div class="header-user-menu">
+            <a href="login.html" id="btn-entrar" class="btn-entrar">Entrar</a>
+            <a href="perfil.html" id="link-perfil" class="container-perfil">
+                <img src="imagenslojas/perfil.webp" alt="Meu Perfil" class="bolinha-perfil" id="header-avatar" onerror="this.src='imagenslojas/perfil.jpg'">
+            </a>
+        </div>
+    </header>
+
+    <main class="container profile-container">
+        <div class="profile-card">
+            
+            <div class="profile-banner-wrapper">
+                <div class="profile-banner" id="profile-banner-bg" style="background-image: url('imagenslojas/perfil.webp'), url('imagenslojas/perfil.jpg');"></div>
+                
+                <div class="profile-avatar-container">
+                    <img src="imagenslojas/perfil.webp" alt="Foto de Perfil" id="profile-avatar-img" class="profile-avatar" onerror="this.src='imagenslojas/perfil.jpg'">
+                    <label for="file-upload" class="avatar-edit-badge hidden" id="avatar-badge">📸</label>
+                    <input type="file" id="file-upload" accept="image/*" style="display: none;">
+                </div>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-header-actions">
+                    <div class="user-titles">
+                        <input type="text" id="user-name-input" class="view-mode-input" value="Brayan Henrique" disabled>
+                        <span class="user-region">📍 Explorador de Minas Gerais</span>
+                    </div>
+                    <button type="button" id="btn-edit-profile" class="btn-profile-action">Editar Perfil</button>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Sobre mim</h3>
+                    <textarea id="user-bio-input" class="view-mode-textarea" placeholder="Conte um pouco sobre suas viagens por Minas..." disabled>Apaixonado por um bom café passado na hora, pão de queijo quentinho e por explorar as riquezas escondidas do nosso estado, desde as montanhas até o interior rural.</textarea>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Minhas Medalhas</h3>
+                    <p class="section-subtitle">Escolha quais medalhas deseja exibir no seu perfil público quando estiver em modo de edição.</p>
+                    
+                    <div class="medals-grid">
+                        <div class="medal-item" data-medal-id="1">
+                            <div class="medal-icon">🔺</div>
+                            <span class="medal-name">Uai de Ouro</span>
+                            <small class="medal-desc">Iniciou a jornada no site</small>
+                            <input type="checkbox" class="medal-checkbox hidden" checked disabled>
+                        </div>
+
+                        <div class="medal-item" data-medal-id="2">
+                            <div class="medal-icon">🤠</div>
+                            <span class="medal-name">Triângulo Mineiro</span>
+                            <small class="medal-desc">Explorou a rota mais rural</small>
+                            <input type="checkbox" class="medal-checkbox hidden" checked disabled>
+                        </div>
+
+                        <div class="medal-item" data-medal-id="3">
+                            <div class="medal-icon">☕</div>
+                            <span class="medal-name">Sommelier de Café</span>
+                            <small class="medal-desc">Visitou 5 cafeterias tradicionais</small>
+                            <input type="checkbox" class="medal-checkbox hidden" disabled>
+                        </div>
+
+                        <div class="medal-item" data-medal-id="4">
+                            <div class="medal-icon">🧱</div>
+                            <span class="medal-name">Historiador</span>
+                            <small class="medal-desc">Passou pelas cidades históricas</small>
+                            <input type="checkbox" class="medal-checkbox hidden" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-logout-wrapper">
+                    <button type="button" id="btn-logout" class="btn-logout">Sair da Conta</button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Contato: (31) 9999-9999 | contato@aquiebao.com.br</p> 
+        <p>2026 - Aqui é bão, Uai!!</p> 
+    </footer>
+
+    <script type="module" src="js/verifica-auth.js"></script>
+    
+    <script>
+        // MÁGICA DO MODO DE EDIÇÃO (FRONT-END PREPARADO)
+        const btnEdit = document.getElementById('btn-edit-profile');
+        const nameInput = document.getElementById('user-name-input');
+        const bioInput = document.getElementById('user-bio-input');
+        const avatarBadge = document.getElementById('avatar-badge');
+        const checkboxes = document.querySelectorAll('.medal-checkbox');
+        const fileUpload = document.getElementById('file-upload');
+        const avatarImg = document.getElementById('profile-avatar-img');
+        const bannerBg = document.getElementById('profile-banner-bg');
+
+        let isEditing = false;
+
+        btnEdit.addEventListener('click', () => {
+            isEditing = !isEditing;
+
+            if (isEditing) {
+                // MUDANDO PARA MODO DE EDIÇÃO
+                btnEdit.textContent = 'Salvar Alterações';
+                btnEdit.classList.add('saving-mode');
+                
+                // Ativa os inputs liberando as bordas
+                nameInput.disabled = false;
+                bioInput.disabled = false;
+                nameInput.className = 'edit-mode-input';
+                bioInput.className = 'edit-mode-textarea';
+                
+                // Mostra o ícone de trocar foto e os seletores das medalhas
+                avatarBadge.classList.remove('hidden');
+                checkboxes.forEach(cb => {
+                    cb.classList.remove('hidden');
+                    cb.disabled = false;
+                });
+            } else {
+                // MUDANDO PARA MODO DE VISUALIZAÇÃO (SALVANDO)
+                btnEdit.textContent = 'Editar Perfil';
+                btnEdit.classList.remove('saving-mode');
+                
+                nameInput.disabled = true;
+                bioInput.disabled = true;
+                nameInput.className = 'view-mode-input';
+                bioInput.className = 'view-mode-textarea';
+                
+                avatarBadge.classList.add('hidden');
+                checkboxes.forEach(cb => {
+                    cb.classList.add('hidden');
+                    cb.disabled = true;
+                });
+
+                // Aqui futuramente colocaremos a chamada do Firebase Firestore para salvar!
+                alert('Alterações salvas com sucesso no seu perfil, sô!');
+            }
+        });
+
+        // Pré-visualização simples da imagem se o usuário carregar uma nova
+        fileUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    avatarImg.src = event.target.result;
+                    bannerBg.style.backgroundImage = `url('${event.target.result}')`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
