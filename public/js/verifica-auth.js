@@ -12,23 +12,23 @@ const firebaseConfig = {
   messagingSenderId: "...",
   appId: "..."
 };
-s
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Pega os elementos do header
+// Pega os elementos novos que separamos no HTML
 const linkPerfil = document.getElementById('link-perfil');
-const textoEntrar = document.getElementById('texto-entrar');
+const btnEntrar = document.getElementById('btn-entrar');
 
 // Fica monitorando se alguém está logado
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        // LOGADO: Esconde a palavra "Entrar" e o link agora leva para o perfil
-        if (textoEntrar) textoEntrar.style.display = 'none';
+        // LOGADO: Esconde o botão "Entrar" e o link da bolinha leva para o perfil
+        if (btnEntrar) btnEntrar.style.display = 'none';
         if (linkPerfil) linkPerfil.href = 'perfil.html';
     } else {
-        // DESLOGADO: Mostra "Entrar" e o link leva para a tela de login
-        if (textoEntrar) textoEntrar.style.display = 'block';
+        // DESLOGADO: Mostra o botão "Entrar" e o link da bolinha leva para o login
+        if (btnEntrar) btnEntrar.style.display = 'block';
         if (linkPerfil) linkPerfil.href = 'login.html';
     }
 });

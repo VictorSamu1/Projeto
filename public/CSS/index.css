@@ -551,35 +551,43 @@ footer {
 /* ========================================================
    SISTEMA DE PERFIL NO HEADER (CANTO DIREITO)
 ======================================================== */
-.container-perfil {
+/* ========================================================
+   SISTEMA DE PERFIL NO HEADER (CANTO DIREITO) - INDEPENDENTES
+======================================================== */
+.header-user-menu {
     position: absolute;
     top: 32px;
     right: 4%;
     display: flex;
     align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    transition: transform 0.2s ease;
+    gap: 15px; /* Espaço entre o botão de entrar e a bolinha */
     z-index: 10;
 }
 
-.container-perfil:hover {
-    transform: translateY(-2px);
-}
-
-.texto-entrar {
+.btn-entrar {
     color: #fff;
     font-family: Georgia, serif;
     font-weight: bold;
     font-size: 1.05rem;
     background: rgba(255, 255, 255, 0.16);
-    padding: 6px 16px;
-    border-radius: 999px;
-    transition: background 0.2s ease;
+    padding: 8px 18px;
+    border-radius: 8px; /* Mais quadrado, menos pílula */
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.container-perfil:hover .texto-entrar {
+.btn-entrar:hover {
     background: rgba(255, 255, 255, 0.32);
+    transform: translateY(-2px);
+}
+
+.container-perfil {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.container-perfil:hover {
+    transform: translateY(-2px);
 }
 
 .bolinha-perfil {
@@ -592,9 +600,9 @@ footer {
     background-color: #f9f6f2;
 }
 
-/* Ajuste no Header para a bolinha não espremer os links em telas menores */
+/* Ajuste no Header para não espremer os links em telas menores */
 @media (max-width: 768px) {
-    .container-perfil {
+    .header-user-menu {
         top: 20px;
         right: 15px;
     }
@@ -602,7 +610,7 @@ footer {
         width: 45px;
         height: 45px;
     }
-    .texto-entrar {
-        display: none; /* Esconde o texto "Entrar" no celular pra não poluir */
+    .btn-entrar {
+        display: none; /* Esconde o botão "Entrar" no celular pra não poluir, a bolinha já resolve */
     }
 }
