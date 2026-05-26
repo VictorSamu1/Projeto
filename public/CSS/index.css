@@ -367,9 +367,11 @@ main h2 {
     .top-accounts::before {
         margin-bottom: 10px;
     }
-    /* ==========================================================================
-   6. COMPONENTE: CARD DA LOJA (.item-card)
-   ========================================================================== */
+} /* <- Chave que faltava corrigida pelo sistema */
+
+/* ==========================================================================
+6. COMPONENTE: CARD DA LOJA (.item-card)
+========================================================================== */
 .item-card {
     position: relative;
     display: grid;
@@ -517,6 +519,7 @@ main h2 {
 .top-accounts img:hover {
     transform: scale(1.08); /* Efeito sutil de zoom ao passar o mouse */
 }
+
 /* --- CONTROLE DE OPACIDADE DA IMAGEM DE FUNDO --- */
 body::before {
     content: "";
@@ -535,6 +538,7 @@ body::before {
     z-index: -1; 
     pointer-events: none; 
 }
+
 footer {
     background: #000000;
     color: #ddd;
@@ -543,4 +547,70 @@ footer {
     font-size: 0.95rem;
     margin-top: auto;
 }
+
+/* ========================================================
+   SISTEMA DE PERFIL NO HEADER (CANTO DIREITO)
+======================================================== */
+/* ========================================================
+   SISTEMA DE PERFIL NO HEADER (CANTO DIREITO) - INDEPENDENTES
+======================================================== */
+.header-user-menu {
+    position: absolute;
+    top: 32px;
+    right: 4%;
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre o botão de entrar e a bolinha */
+    z-index: 10;
+}
+
+.btn-entrar {
+    color: #fff;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-size: 1.05rem;
+    background: rgba(255, 255, 255, 0.16);
+    padding: 8px 18px;
+    border-radius: 8px; /* Mais quadrado, menos pílula */
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-entrar:hover {
+    background: rgba(255, 255, 255, 0.32);
+    transform: translateY(-2px);
+}
+
+.container-perfil {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.container-perfil:hover {
+    transform: translateY(-2px);
+}
+
+.bolinha-perfil {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    background-color: #f9f6f2;
+}
+
+/* Ajuste no Header para não espremer os links em telas menores */
+@media (max-width: 768px) {
+    .header-user-menu {
+        top: 20px;
+        right: 15px;
+    }
+    .bolinha-perfil {
+        width: 45px;
+        height: 45px;
+    }
+    .btn-entrar {
+        display: none; /* Esconde o botão "Entrar" no celular pra não poluir, a bolinha já resolve */
+    }
 }
