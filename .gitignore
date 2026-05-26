@@ -4,10 +4,7 @@
 c#/bin/
 c#/obj/
 c#/appsettings.Development.json
-<<<<<<< HEAD
 /node_modules
-=======
->>>>>>> 99c4a1021ebb740abd342b620c4a0422417aa526
 
 # ==========================================
 # IGNORAR SENHAS E CONFIGURAÇÕES LOCAIS (A SUA CHAVE DA IA)
@@ -15,7 +12,6 @@ c#/appsettings.Development.json
 appsettings.Development.json
 appsettings.*.json
 *.env
-
 # ==========================================
 # IGNORAR LIXO DO SISTEMA OPERACIONAL
 # ==========================================
