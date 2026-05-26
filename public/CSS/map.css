@@ -13,34 +13,13 @@
     box-sizing: border-box;
 }
 
-/* O gradiente veio para o html para a imagem não ficar escondida */
-html {
-    background: linear-gradient(180deg, #f9f6f2 0%, #f4f4f8 100%);
-}
-
 body {
     margin: 0;
+    background: linear-gradient(180deg, #f9f6f2 0%, #f4f4f8 100%);
     color: #2b2b2b;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    position: relative; /* Necessário para segurar a imagem de fundo */
-}
-
-/* --- IMAGEM DE FUNDO COM OPACIDADE 0.75 --- */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../imagens_geral/fundo_site.png');
-    background-repeat: repeat;
-    background-size: 400px;
-    opacity: 0.75; 
-    z-index: -1; 
-    pointer-events: none; 
 }
 
 /* --- CABEÇALHO --- */
@@ -254,7 +233,7 @@ nav a:hover {
 
 /* --- RODAPÉ --- */
 footer {
-    background: #000000;
+    background: #222;
     color: #ddd;
     text-align: center;
     padding: 20px 16px;
@@ -274,5 +253,68 @@ footer p {
     .logo {
         position: static;
         margin: 0 auto 15px auto;
+    }
+}
+
+/* ========================================================
+   SISTEMA DE PERFIL NO HEADER (CANTO DIREITO) - INDEPENDENTES
+======================================================== */
+.header-user-menu {
+    position: absolute;
+    top: 32px;
+    right: 4%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 10;
+}
+
+.btn-entrar {
+    color: #fff;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-size: 1.05rem;
+    background: rgba(255, 255, 255, 0.16);
+    padding: 8px 18px;
+    border-radius: 8px; /* Formato quadradinho aprovado */
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-entrar:hover {
+    background: rgba(255, 255, 255, 0.32);
+    transform: translateY(-2px);
+}
+
+.container-perfil {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.container-perfil:hover {
+    transform: translateY(-2px);
+}
+
+.bolinha-perfil {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    background-color: #f9f6f2;
+}
+
+@media (max-width: 768px) {
+    .header-user-menu {
+        top: 20px;
+        right: 15px;
+    }
+    .bolinha-perfil {
+        width: 45px;
+        height: 45px;
+    }
+    .btn-entrar {
+        display: none;
     }
 }

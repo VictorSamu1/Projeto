@@ -5,11 +5,10 @@
     <title>Notícias - Aqui é bão, Uai!!</title>
     <link rel="stylesheet" href="CSS/index.css">
     <link rel="stylesheet" href="CSS/not.css">
-   
 </head>
 <body>
     <header>
-            <img src="imagenslojas/logo.png" alt="Logo" class="logo">
+        <img src="imagenslojas/logo.png" alt="Logo" class="logo">
         <div class="header-inner">
             <h1>Notícias de Minas Gerais</h1>
             <nav>
@@ -18,20 +17,27 @@
                 <a href="mapa.html">Mapa</a>
             </nav>
         </div>
+
+        <div class="header-user-menu">
+            <a href="login.html" id="btn-entrar" class="btn-entrar">Entrar</a>
+            <a href="login.html" id="link-perfil" class="container-perfil">
+                <img src="imagenslojas/perfil.webp" alt="Meu Perfil" class="bolinha-perfil" onerror="this.src='imagenslojas/perfil.jpg'">
+            </a>
+        </div>
     </header>
 
     <main class="container">
-    <div id="feed-noticias-mg" class="grid-lojas">
-        <p>Carregando as notícias de Minas, uai...</p>
-    </div>
+        <div id="feed-noticias-mg" class="grid-lojas">
+            <p>Carregando as notícias de Minas, uai...</p>
+        </div>
+    </main>
 
-</main>
-
-<footer>
+    <footer>
         <p>Contato: (31) 9999-9999 | contato@aquiebao.com.br</p> 
         <p>2026 - Aqui é bão, Uai!!</p> 
     </footer>
 
-<script src="js/noticia.js"></script>
+    <script src="js/noticia.js"></script>
+    <script type="module" src="js/verifica-auth.js"></script>
 </body>
 </html>
