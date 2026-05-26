@@ -41,6 +41,8 @@
     height: 200px;
     object-fit: cover;
     border-bottom: 1px solid #eee;
+
+    border-radius: 12px;
 }
 
 /* Conteúdo do texto no Card */
@@ -139,6 +141,8 @@ header {
     background: linear-gradient(180deg, #f8f8f8, #efefef);
     font-size: 3rem;
     color: #dcdcdc;
+
+    border-radius: 12px;
 }
 
 /* Ajuste do título dentro do conteúdo para visual mais compacto */
@@ -147,6 +151,16 @@ header {
     margin: 0;
     font-size: 1.05rem;
     color: var(--vermelho-minas);
+}
+
+/* Estilo dos links das notícias - Remove o underline azul */
+.item-card--noticia {
+    text-decoration: none;
+    color: inherit;
+}
+
+.item-card--noticia:visited {
+    color: inherit;
 }
 
 /* --- IMAGEM DE FUNDO COM OPACIDADE 0.75 --- */
@@ -177,17 +191,4 @@ footer {
 
 footer p {
     margin: 8px 0;
-}
-
-.logo {
-    position: absolute;
-    top: 32px;
-    left: 4%;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: #fff;
-    border: 3px solid #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
