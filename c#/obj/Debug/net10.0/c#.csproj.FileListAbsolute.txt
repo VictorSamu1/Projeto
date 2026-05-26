@@ -27,7 +27,6 @@ C:\Users\Brayan Henrique\OneDrive - SENAC em Minas - EDU\Área de Trabalho\proje
 C:\Users\Brayan Henrique\OneDrive - SENAC em Minas - EDU\Área de Trabalho\projetoIntegradorEEmLo\Projeto\c#\obj\Debug\net10.0\c#.pdb
 C:\Users\Brayan Henrique\OneDrive - SENAC em Minas - EDU\Área de Trabalho\projetoIntegradorEEmLo\Projeto\c#\obj\Debug\net10.0\c#.genruntimeconfig.cache
 C:\Users\Brayan Henrique\OneDrive - SENAC em Minas - EDU\Área de Trabalho\projetoIntegradorEEmLo\Projeto\c#\obj\Debug\net10.0\ref\c#.dll
-C:\Projeto\c#\bin\Debug\net10.0\appsettings.Development.json
 C:\Projeto\c#\bin\Debug\net10.0\appsettings.json
 C:\Projeto\c#\bin\Debug\net10.0\c#.staticwebassets.endpoints.json
 C:\Projeto\c#\bin\Debug\net10.0\c#.exe
@@ -56,3 +55,6 @@ C:\Projeto\c#\obj\Debug\net10.0\refint\c#.dll
 C:\Projeto\c#\obj\Debug\net10.0\c#.pdb
 C:\Projeto\c#\obj\Debug\net10.0\c#.genruntimeconfig.cache
 C:\Projeto\c#\obj\Debug\net10.0\ref\c#.dll
+C:\Projeto\c#\bin\Debug\net10.0\System.ServiceModel.Syndication.dll
+C:\Projeto\c#\obj\Debug\net10.0\c#.csproj.AssemblyReference.cache
+C:\Projeto\c#\obj\Debug\net10.0\c#.csproj.Up2Date
