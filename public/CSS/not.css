@@ -72,6 +72,16 @@
     font-size: 1.2rem;
 }
 
+/* Ajuste do header para página de notícias, mantendo logo dentro do layout */
+header {
+    min-height: 300px;
+    padding-top: 36px;
+}
+
+.header-inner {
+    min-height: 170px;
+}
+
 /* Conteúdo interno do card (texto) */
 .item-card__conteudo {
     padding: 12px 15px;
@@ -144,4 +154,17 @@ footer {
 
 footer p {
     margin: 8px 0;
+}
+
+.logo {
+    position: absolute;
+    top: 32px;
+    left: 4%;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #fff;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
