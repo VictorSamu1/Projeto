@@ -72,14 +72,37 @@
     font-size: 1.2rem;
 }
 
-/* Ajuste do header para página de notícias, mantendo logo dentro do layout */
+/* Ajuste do header para página de notícias, igual ao login */
 header {
-    min-height: 300px;
-    padding-top: 36px;
+    background: linear-gradient(135deg, #FF0000 0%, #FF0000 100%);
+    color: #fff;
+    padding: 24px 16px;
+    position: relative;
+    text-align: center;
+    min-height: 220px;
+}
+
+.logo {
+    position: absolute;
+    top: 32px;
+    left: 4%;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #fff;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .header-inner {
-    min-height: 170px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
 }
 
 /* Conteúdo interno do card (texto) */
