@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - Aqui é bão, Uai!!</title>
+    
+    <link rel="stylesheet" href="CSS/login.css">
+</head>
+
+<body>
+
+    <header>
+        <img src="imagenslojas/logo.png" alt="Logo" class="logo">
+        <div class="header-inner">
+            <h1>Aqui é bão, Uai!!</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="noticias.html">Notícias</a>
+                <a href="mapa.html">Mapa</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            
+            <div id="login-section" class="auth-form-block">
+                <h2>Bem-vindo de volta, Uai!</h2>
+                <p class="subtitle">Faça login para acessar seus favoritos</p>
+                
+                <form id="form-login" onsubmit="return false;">
+                    <div class="input-group">
+                        <label for="login-email">E-mail</label>
+                        <input type="email" id="login-email" class="pill-input" placeholder="seuemail@exemplo.com" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="login-senha">Senha</label>
+                        <input type="password" id="login-senha" class="pill-input" placeholder="Sua senha" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-auth">Entrar</button>
+                </form>
+                
+                <div class="auth-toggle">
+                    <span>Não tem uma conta? <a href="#" id="to-register">Cadastre-se</a></span>
+                </div>
+            </div>
+
+            <div id="register-section" class="auth-form-block hidden">
+                <h2>Criar Nova Conta</h2>
+                <p class="subtitle">Venha explorar o melhor de Minas Gerais</p>
+                
+                <form id="form-register" onsubmit="return false;">
+                    <div class="input-group">
+                        <label for="reg-nome">Nome Completo</label>
+                        <input type="text" id="reg-nome" class="pill-input" placeholder="Como quer ser chamado?" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="reg-email">E-mail</label>
+                        <input type="email" id="reg-email" class="pill-input" placeholder="seuemail@exemplo.com" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="reg-senha">Senha</label>
+                        <input type="password" id="reg-senha" class="pill-input" placeholder="Mínimo 6 caracteres" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="reg-confirm-senha">Confirmar Senha</label>
+                        <input type="password" id="reg-confirm-senha" class="pill-input" placeholder="Repita a senha" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-auth">Criar Conta</button>
+                </form>
+                
+                <div class="auth-toggle">
+                    <span>Já possui uma conta? <a href="#" id="to-login">Fazer Login</a></span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>Contato: (31) 9999-9999 | contato@aquiebao.com.br</p> 
+        <p>2026 - Aqui é bão, Uai!!</p> 
+    </footer>
+
+    <script>
+        const loginSection = document.getElementById('login-section');
+        const registerSection = document.getElementById('register-section');
+        
+        document.getElementById('to-register').addEventListener('click', (e) => {
+            e.preventDefault();
+            loginSection.classList.add('hidden');
+            registerSection.classList.remove('hidden');
+        });
+
+        document.getElementById('to-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            registerSection.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+        });
+    </script>
+
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>

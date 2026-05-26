@@ -1,0 +1,278 @@
+/* ========================================================
+   ESTILO FINAL - AQUI É BÃO, UAI!! (MAPA COM HEADER CHEIO)
+======================================================== */
+
+:root {
+    color-scheme: light;
+    font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* O gradiente veio para o html para a imagem não ficar escondida */
+html {
+    background: linear-gradient(180deg, #f9f6f2 0%, #f4f4f8 100%);
+}
+
+body {
+    margin: 0;
+    color: #2b2b2b;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Necessário para segurar a imagem de fundo */
+}
+
+/* --- IMAGEM DE FUNDO COM OPACIDADE 0.75 --- */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../imagens_geral/fundo_site.png');
+    background-repeat: repeat;
+    background-size: 400px;
+    opacity: 0.75; 
+    z-index: -1; 
+    pointer-events: none; 
+}
+
+/* --- CABEÇALHO --- */
+header {
+    background: linear-gradient(135deg, #FF0000 0%, #FF0000 100%);
+    color: #fff;
+    padding: 24px 16px;
+    position: relative;
+    text-align: center;
+    /* Com os inputs dentro, a altura vai se ajustar perfeitamente à logo */
+    min-height: 190px; 
+}
+
+.logo {
+    position: absolute;
+    top: 32px;
+    left: 4%;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #fff;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: clamp(1.8rem, 2.5vw, 3rem);
+    line-height: 1.1;
+    font-family: Georgia, serif;
+    padding-top: 10px;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    transition: background 0.2s ease, transform 0.2s ease;
+    font-family: Georgia, serif;
+    font-weight: bold;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.32);
+    transform: translateY(-1px);
+}
+
+/* --- INPUTS DE PESQUISA NO HEADER --- */
+.header-actions-map {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    width: min(100%, 350px);
+}
+
+.search-input {
+    width: 100%;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 20px;
+    font-size: 1rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border: 2px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
+    color: #333;
+}
+
+.search-input:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+    background: #fff;
+}
+
+/* --- ESTRUTURA DOS CARDS (TAMANHOS ORIGINAIS) --- */
+.map-container {
+    max-width: 1300px; /* Largura total ampla */
+    margin: 36px auto;
+    padding: 0 16px;
+    display: flex;
+    gap: 24px;
+    flex: 1;
+    align-items: stretch; /* Estica o mapa e a barra juntos */
+    width: 1300px;
+}
+
+/* O MAPA VOLTA A SER O PROTAGONISTA LARGO */
+.map-wrapper {
+    flex: 2.5; 
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+    border: 2px solid #FF0000;
+}
+
+#meuMapa {
+    height: 600px;
+    width: 100%;
+    z-index: 1;
+}
+
+/* A BARRA LATERAL VOLTA A SER FINA E COMPRIDA */
+.map-sidebar {
+    flex: 1; 
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 20px 15px;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+    border: 2px solid #FF0000;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- LISTA DE LOJAS --- */
+.sidebar-content h3 {
+    color: #FF0000;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-family: Georgia, serif;
+    border-bottom: 2px solid #ffeeee;
+    padding-bottom: 10px;
+}
+
+.store-list {
+    list-style: none;
+    padding: 0;
+    overflow-y: auto;
+    max-height: 520px; /* Mais comprida para aproveitar o espaço ao lado do mapa */
+}
+
+/* Customização da barrinha de rolagem para ficar bonita */
+.store-list::-webkit-scrollbar {
+    width: 6px;
+}
+.store-list::-webkit-scrollbar-thumb {
+    background-color: #ffcccc;
+    border-radius: 10px;
+}
+
+.store-item {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 12px;
+    margin-right: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid #eaeaea;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
+}
+
+.store-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-color: #FF0000;
+}
+
+.store-item strong {
+    color: #2b2b2b;
+    font-size: 1.1rem;
+    display: block;
+}
+
+.btn-favorite {
+    background: linear-gradient(135deg, #FF0000 0%, #cc0000 100%);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 999px;
+    cursor: pointer;
+    margin-top: 12px;
+    font-weight: bold;
+    width: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-favorite:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 0, 0, 0.2);
+}
+
+/* --- RODAPÉ --- */
+footer {
+    background: #000000;
+    color: #ddd;
+    text-align: center;
+    padding: 20px 16px;
+    font-size: 0.95rem;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 8px 0;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .map-container {
+        flex-direction: column;
+    }
+    .logo {
+        position: static;
+        margin: 0 auto 15px auto;
+    }
+}
