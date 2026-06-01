@@ -28,7 +28,7 @@ public static class Noticias
                 using var xmlReader = XmlReader.Create(stringReader);
                 var feed = SyndicationFeed.Load(xmlReader);
 
-                var noticias = feed.Items.Take(9).Select(item =>
+                var noticias = feed.Items.DistinctBy(item => item.Title.Text).Take(9).Select(item =>
                 {
                     // Tenta extrair a imagem do campo <media:content> ou <enclosure>
                     string capa = "";
