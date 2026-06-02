@@ -1,9 +1,8 @@
 
-// Importa o Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-// =====================================================================
+// NOVO: Importando o banco de dados
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 // COLE SUAS CHAVES REAIS AQUI (Copie lá do painel do Firebase)
 // =====================================================================
 const firebaseConfig = {
@@ -16,6 +15,6 @@ const firebaseConfig = {
   measurementId: "G-2HN8PB8CBG"
 };
 
-// Inicializa o Firebase e EXPORTA para os outros arquivos usarem
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
