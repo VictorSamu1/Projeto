@@ -427,3 +427,29 @@ footer p {
 .anim-drop-merge {
     animation: dropAndMerge 0.9s ease-in forwards;
 }
+/* ========================================================
+   BOTÃO DE SALVAR PARA ROTEIRO
+======================================================== */
+.btn-salvar {
+    background: #f4f4f8;
+    color: #444;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+}
+
+.btn-salvar:hover {
+    background: #FF0000;
+    color: white;
+    border-color: #FF0000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2);
+}
