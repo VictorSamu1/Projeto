@@ -194,6 +194,7 @@ nav a:hover {
     background: #ffffff;
     border-radius: 16px;
     padding: 15px;
+    margin-top: 5px;
     margin-bottom: 12px;
     margin-right: 5px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
@@ -317,4 +318,112 @@ footer p {
     .btn-entrar {
         display: none;
     }
+}
+/* ========================================================
+   SISTEMA DE CHECK-IN ANIMADO (GAME FEEL) - VERSÃO FLUIDA
+======================================================== */
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.action-buttons .btn-favorite {
+    margin-top: 0; 
+    flex: 1;
+}
+
+/* O Botão Circular Inicial */
+.btn-checkin-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+    /* Transição suave para esticar o botão */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    padding: 0;
+    overflow: hidden; 
+}
+
+/* O span do número agora fica sempre lá, mas espremido com tamanho 0 */
+.btn-checkin-circle .count {
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    font-weight: bold;
+    white-space: nowrap;
+    /* A mágica do espaço acontecendo aos poucos */
+    transition: max-width 0.4s ease, opacity 0.4s ease, margin-left 0.4s ease;
+}
+
+/* Quando recebe o número, ele estica e vira pílula */
+.btn-checkin-circle.has-count {
+    width: auto;
+    min-width: 65px;
+    padding: 0 16px;
+    border-radius: 999px;
+}
+
+/* Aqui ele "abre o espaço" para o número */
+.btn-checkin-circle.has-count .count {
+    max-width: 40px; 
+    opacity: 1;
+    margin-left: 6px; 
+}
+
+.btn-checkin-circle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
+}
+
+/* Animação 1: O Pulo e o Giro do botão (Mais longo: 0.9s) */
+@keyframes jumpSpin {
+    0% { transform: translateY(0) rotate(0deg); }
+    40% { transform: translateY(-15px) rotate(180deg); }
+    70% { transform: translateY(4px) rotate(360deg); }
+    85% { transform: translateY(-2px) rotate(360deg); }
+    100% { transform: translateY(0) rotate(360deg); }
+}
+
+.anim-jump-spin {
+    animation: jumpSpin 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    pointer-events: none; 
+}
+
+/* O "+1" Flutuante */
+.floating-plus-one {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #27ae60;
+    font-weight: 900;
+    font-size: 1.3rem;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Animação 2: O "+1" voando BEM mais alto (-85px) e caindo */
+@keyframes dropAndMerge {
+    0% { top: -45px; opacity: 0; transform: translateX(-50%) scale(0.5); }
+    30% { top: -85px; opacity: 1; transform: translateX(-50%) scale(1.3); } 
+    70% { top: -25px; opacity: 1; transform: translateX(-50%) scale(1); }
+    100% { top: 5px; opacity: 0; transform: translateX(-50%) scale(0.5); } 
+}
+
+.anim-drop-merge {
+    animation: dropAndMerge 0.9s ease-in forwards;
 }

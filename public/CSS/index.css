@@ -49,8 +49,9 @@ body {
 header {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%);
     color: var(--color-text-light);
-    padding: 24px 16px;
+    padding: 55px 16px;
     position: relative;
+    min-height: 220px;
 }
 
 .logo {
