@@ -1,216 +1,221 @@
 /* =================================================================
-   SEUS ESTILOS ORIGINAIS (Preservados com o tema Vermelho)
-   ================================================================= */
-.roteiro-box { 
-    background: white; 
-    padding: 20px; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
-    margin-bottom: 25px; 
-    text-align: center; 
-    border-top: 5px solid #d32f2f;
-}
-
-.roteiro-box h2 { 
-    color: #d32f2f; 
-    margin-bottom: 10px; 
-    font-size: 24px;
-}
-
-.roteiro-box p {
-    font-size: 16px;
-    color: #444;
-    margin-bottom: 15px;
-}
-
-.btn-voltar { 
-    display: inline-block; 
-    padding: 12px 25px; 
-    background: #d32f2f; 
-    color: white; 
-    text-decoration: none; 
-    border-radius: 5px; 
-    margin-top: 15px; 
-    font-weight: bold;
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.btn-voltar:hover {
-    background: #b71c1c; 
-    transform: scale(1.05); 
-}
-
-/* =================================================================
    ESTRUTURA DO PAINEL DE DUAS COLUNAS
    ================================================================= */
 .painel-roteiro { 
     display: flex; 
-    gap: 25px; 
-    max-width: 1200px; 
-    margin: 30px auto; 
-    padding: 0 20px; 
+    gap: 24px; 
+    max-width: 1300px; 
+    margin: 36px auto; 
+    padding: 0 16px; 
     align-items: flex-start;
+    flex: 1;
 }
 
 .coluna-esquerda { 
     flex: 1; 
-    background: #f9f9f9; 
-    padding: 35px;               
-    border-radius: 8px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    min-height: 550px;           
+    background: #ffffff; 
+    padding: 24px;               
+    border-radius: 24px; 
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+    border: 2px solid #FF0000;
+    min-height: 600px;
+    max-height: 800px;
+    overflow-y: auto;           
 }
 
+/* Scrollbar fina para a coluna da esquerda */
+.coluna-esquerda::-webkit-scrollbar { width: 6px; }
+.coluna-esquerda::-webkit-scrollbar-thumb { background-color: #ffcccc; border-radius: 10px; }
+
 .coluna-direita { 
-    flex: 1.2; 
+    flex: 1.5; 
+    display: flex;
+    flex-direction: column;
+}
+
+.cabecalho-roteiro {
+    background: #ffffff;
+    padding: 20px 24px;
+    border-radius: 24px 24px 0 0;
+    border: 2px solid #FF0000;
+    border-bottom: none;
+}
+
+/* Input invisível para editar o título */
+.input-titulo-roteiro {
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    font-family: Georgia, serif;
+    color: #333;
+    font-weight: bold;
+    width: auto;
+    flex: 1;
+    outline: none;
+    border-bottom: 2px dashed transparent;
+    transition: border 0.3s ease;
+}
+
+.input-titulo-roteiro:not(:disabled) {
+    border-bottom: 2px dashed #FF0000;
+    background: #fff9f9;
 }
 
 /* =================================================================
-   A DIV DE PERSONALIZAÇÃO (Grandona e Espaçosa)
+   A DIV DE PERSONALIZAÇÃO
    ================================================================= */
 .div-personalizacao {
     background: #ffffff;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    padding: 35px;               
-    min-height: 550px;           
-    margin-bottom: 25px;         /* Diminuído ligeiramente para aproximar os botões */
-    box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+    border: 2px solid #FF0000;
+    border-radius: 0 0 24px 24px;
+    padding: 24px;               
+    min-height: 500px;           
+    margin-bottom: 24px;         
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
 }
 
 .div-personalizacao.modo-edicao {
-    border: 2px solid #d32f2f;
-    background: #fffdfd;
+    background: #fffafa;
+    border: 2px dashed #FF0000;
 }
 
 /* =================================================================
-   CARDS DOS LUGARES E CAMPOS INTERNOS
+   CARDS DOS LUGARES
    ================================================================= */
 .card-local { 
     background: #fdfdfd; 
-    padding: 20px;               
-    margin-bottom: 20px;         
-    border-left: 5px solid #555; 
-    border-radius: 4px; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    padding: 16px;               
+    margin-bottom: 12px;         
+    border-left: 6px solid #ccc; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04); 
+    border-top: 1px solid #eaeaea;
+    border-right: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
 }
 
 .card-local.no-roteiro { 
-    border-left-color: #d32f2f; 
-    background: white; 
+    border-left-color: #FF0000; 
 }
 
-.campos-tempo { 
-    display: flex; 
-    gap: 15px; 
-    margin-top: 15px; 
-}
-
-.campo-grupo { 
-    display: flex; 
-    flex-direction: column; 
-    flex: 1; 
-}
-
-.campo-grupo label { 
-    font-size: 0.85em; 
-    font-weight: bold; 
-    margin-bottom: 5px; 
-    color: #555; 
-}
-
-.campo-grupo input { 
-    padding: 8px;                
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
+.horario-badge {
+    display: inline-block;
+    background: #ffebeb;
+    color: #FF0000;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
 .btn-card { 
     width: 100%; 
     padding: 10px;               
-    margin-top: 15px; 
+    margin-top: 12px; 
     border: none; 
-    border-radius: 4px; 
+    border-radius: 8px; 
     font-weight: bold; 
     cursor: pointer; 
     color: white; 
-    transition: background 0.2s ease;
+    transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.btn-puxar { background-color: #d32f2f; }
-.btn-puxar:hover { background-color: #b71c1c; }
+.btn-card:hover:not(:disabled) { transform: translateY(-2px); }
+.btn-puxar { background: linear-gradient(135deg, #FF0000 0%, #cc0000 100%); }
 .btn-remover { background-color: #757575; }
-.btn-remover:hover { background-color: #555555; }
 
 /* =================================================================
-   BARRA DE BOTÕES PRINCIPAL (TAMANHOS REDUZIDOS)
+   BOTÕES DE CONTROLE INFERIORES
    ================================================================= */
 .botoes-controle { 
     display: flex; 
-    gap: 10px;                   /* Espaçamento menor entre botões */
-    flex-wrap: wrap;             /* Caso a tela diminua, eles quebram linha elegantemente */
-    margin-bottom: 60px;         
+    gap: 12px;                   
+    flex-wrap: wrap;             
 }
 
 .btn-controle { 
     flex: 1; 
-    min-width: 110px;            /* Garante que o texto não esmague */
-    padding: 10px 12px;          /* REDUZIDO: Antes era 16px */
-    font-size: 0.92em;           /* REDUZIDO: Antes era 1.1em */
+    min-width: 110px;            
+    padding: 12px;          
+    font-size: 0.95em;           
     font-weight: bold; 
     border: none; 
-    border-radius: 5px; 
+    border-radius: 12px; 
     cursor: pointer; 
     color: white; 
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.btn-controle:hover:not(:disabled) {
-    transform: scale(1.03);      
-}
-
-/* Cores customizadas dos novos botões */
-.btn-navegacao { background-color: #757575; }
-.btn-navegacao:hover { background-color: #555555; }
-
-.btn-criar { background-color: #ff9800; }
-.btn-criar:hover { background-color: #e65100; }
-
-.btn-editar { background-color: #0288d1; }
-.btn-editar:hover { background-color: #01579b; }
-
-.btn-salvar { background-color: #2e7d32; }
-.btn-salvar:hover { background-color: #1b5e20; }
-
-.btn-proximo { background-color: #d32f2f; }
-.btn-proximo:hover { background-color: #b71c1c; }
-
-.btn-apagar { background-color: #c62828; }
-.btn-apagar:hover { background-color: #9a0000; }
-
-/* REGRA CRÍTICA: Estado Desativado (Fica cinza e sem cliques) */
+.btn-controle:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.1); }
 .btn-controle:disabled {
-    background-color: #b0bec5 !important;
-    color: #eceff1 !important;
+    background-color: #e0e0e0 !important;
+    color: #9e9e9e !important;
     cursor: not-allowed !important;
     transform: none !important;
     box-shadow: none !important;
 }
 
-/* Badges de Status */
+.btn-navegacao { background-color: #555; }
+.btn-criar { background-color: #0288d1; }
+.btn-editar { background-color: #ff9800; }
+.btn-salvar { background-color: #27ae60; }
+.btn-apagar { background-color: #e74c3c; }
+
+/* Badges */
 .status-badge { 
-    display: inline-block; 
-    padding: 3px 8px; 
-    font-size: 0.75em; 
+    padding: 4px 10px; 
+    font-size: 0.7em; 
     font-weight: bold; 
-    border-radius: 3px; 
+    border-radius: 999px; 
     color: white; 
-    margin-left: 10px;
-    vertical-align: middle;
+}
+.badge-visualizar { background-color: #757575; }
+.badge-editar { background-color: #FF0000; }
+
+/* =================================================================
+   MODAL DE DATA E HORA
+   ================================================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
 }
 
-.badge-visualizar { background-color: #757575; }
-.badge-editar { background-color: #d32f2f; }
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.modal-input-dt {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    font-family: inherit;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 900px) {
+    .painel-roteiro { flex-direction: column; }
+    .coluna-esquerda { min-height: 300px; max-height: 400px; }
+}
