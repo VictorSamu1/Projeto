@@ -118,13 +118,12 @@
     border-radius: 8px; 
     font-weight: bold; 
     cursor: pointer; 
-    color: white; 
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .btn-card:hover:not(:disabled) { transform: translateY(-2px); }
 .btn-puxar { background: linear-gradient(135deg, #FF0000 0%, #cc0000 100%); }
-.btn-remover { background-color: #757575; }
+.btn-remover { background-color: #000000; }
 
 /* =================================================================
    BOTÕES DE CONTROLE INFERIORES
