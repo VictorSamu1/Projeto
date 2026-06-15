@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planejar Meu Roteiro - Aqui é bão, Uai!!</title>
     
-    <link rel="stylesheet" href="CSS/roteiro.css">
     <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="CSS/roteiro.css">
 </head>
 <body>
     <header>
         <img src="imagenslojas/logo.png" alt="Logo" class="logo">
         <div class="header-inner">
-            <h1>Aqui é bão, Uai!!</h1>
+            <h1>Planejamento, Uai!!</h1>
             <nav>
                 <a href="index.html">Home</a>
                 <a href="noticias.html">Notícias</a>
@@ -20,36 +20,70 @@
                 <a href="roteiro.html">Roteiro</a>
             </nav>
         </div>
+        
+        <div class="header-user-menu">
+            <a href="login.html" id="btn-entrar" class="btn-entrar">Entrar</a>
+            <a href="perfil.html" id="link-perfil" class="container-perfil">
+                <img src="imagenslojas/perfil.webp" alt="Meu Perfil" class="bolinha-perfil" onerror="this.src='imagenslojas/perfil.jpg'">
+            </a>
+        </div>
     </header>
 
     <main class="painel-roteiro">
+        <!-- Esquerda: Backlog de Locais -->
         <section class="coluna-esquerda">
-            <h3 style="margin-top:0; color: #ff9800;">📍 Locais Salvos do Mapa</h3>
-            <p style="font-size: 0.85em; color: gray;">Escolha os lugares aqui para enviar para a div de personalização.</p>
+            <h3 style="margin-top:0; color: #FF0000; font-family: Georgia, serif;">📍 Locais Salvos</h3>
+            <p style="font-size: 0.9em; color: gray;">Escolha os lugares aqui para adicionar à sua viagem.</p>
             <div id="lista-locais-salvos">
-                </div>
+                <h4 style="text-align:center; color:#999;">Carregando seus locais...</h4>
+            </div>
         </section>
 
+        <!-- Direita: O Roteiro Ativo -->
         <section class="coluna-direita">
-            <h3 style="margin-top:0; color: #333;">
-                📅 Cronograma da Viagem 
-                <span id="status-modo" class="status-badge badge-visualizar">Visualizando</span>
-            </h3>
+            <div class="cabecalho-roteiro">
+                <h3 style="margin:0; color: #333; font-family: Georgia, serif; display: flex; align-items: center; gap: 10px;">
+                    📅 <input type="text" id="nome-roteiro-input" value="Carregando..." disabled class="input-titulo-roteiro">
+                    <span id="status-modo" class="status-badge badge-visualizar">Visualizando</span>
+                </h3>
+            </div>
             
             <div id="area-personalizacao" class="div-personalizacao">
-                </div>
+                <!-- Os cards ordenados vão entrar aqui via JS -->
+            </div>
 
-           <div class="botoes-controle">
-    <button id="btn-voltar-roteiro" class="btn-controle btn-navegacao" onclick="roteiroAnterior()">⬅️ Voltar</button>
-    <button id="btn-criar-roteiro" class="btn-controle btn-criar" onclick="criarNovoRoteiro()">➕ Criar Roteiro</button>
-    <button id="btn-modo-editar" class="btn-controle btn-editar" onclick="ativarModoEdicao()">✏️ Editar</button>
-    <button id="btn-modo-salvar" class="btn-controle btn-salvar" onclick="salvarNoBanco()">💾 Salvar</button>
-    <button id="btn-proximo-roteiro" class="btn-controle btn-proximo" onclick="proximoRoteiro()">Próximo ➡️</button>
-    <button id="btn-modo-apagar" class="btn-controle btn-apagar" onclick="limparRoteiroCompleto()">🗑️ Apagar</button>
-</div>
+            <!-- Botões de Controle -->
+            <div class="botoes-controle">
+                <button id="btn-voltar-roteiro" class="btn-controle btn-navegacao" onclick="roteiroAnterior()">⬅️ Anterior</button>
+                <button id="btn-criar-roteiro" class="btn-controle btn-criar" onclick="criarNovoRoteiro()">➕ Criar Novo</button>
+                <button id="btn-modo-editar" class="btn-controle btn-editar" onclick="ativarModoEdicao()">✏️ Editar</button>
+                <button id="btn-modo-salvar" class="btn-controle btn-salvar" onclick="salvarNoBanco()" disabled>💾 Salvar Viagem</button>
+                <button id="btn-modo-apagar" class="btn-controle btn-apagar" onclick="apagarRoteiroAtual()">🗑️ Excluir</button>
+                <button id="btn-proximo-roteiro" class="btn-controle btn-proximo" onclick="proximoRoteiro()">Próximo ➡️</button>
+            </div>
         </section>
     </main>
 
-    <script src="js/roteiro.js"></script>
+    <!-- Modal de Data e Hora -->
+    <div id="modal-data-hora" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 style="color: #FF0000; margin-top: 0;">Quando você quer visitar?</h3>
+            <p id="modal-nome-local" style="font-weight: bold; margin-bottom: 20px;"></p>
+            <input type="datetime-local" id="input-data-hora" class="modal-input-dt">
+            <div class="modal-actions">
+                <button onclick="fecharModal()" class="btn-controle btn-navegacao">Cancelar</button>
+                <button onclick="confirmarAdicaoRoteiro()" class="btn-controle btn-salvar">Confirmar e Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contato: (31) 9999-9999 | contato@aquiebao.com.br</p> 
+        <p>2026 - Aqui é bão, Uai!!</p> 
+    </footer>
+
+    <!-- Scripts em formato Module -->
+    <script type="module" src="js/verifica-auth.js"></script>
+    <script type="module" src="js/roteiro.js"></script>
 </body>
 </html>
