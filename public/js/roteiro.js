@@ -1,159 +1,218 @@
-const MAPTILER_KEY = 'u9koDxJJfDNTc50I8NTs';
-const ESTILO_MAPA = 'streets-v2'; 
+let locaisDoMapa = [];
+// Agora criamos uma lista de roteiros para permitir múltiplos planos!
+let listaDeRoteiros = [[]]; 
+let roteiroIndexAtual = 0;
+let modoEdicaoAtivo = false;
 
-let mapaRoteiro;
-let camadaLojas = L.layerGroup();
-let posicaoUsuario = L.latLng(-19.8656, -43.9108); // Posição inicial
-
-function iniciarMapaRoteiro() {
-    // Altere aqui também para 'meuMapa'
-    mapaRoteiro = L.map('meuMapa').setView(posicaoUsuario, 15);
+function carregarDadosIniciais() {
+    const dadosMapa = localStorage.getItem('meusLocaisRoteiro');
+    if (dadosMapa) locaisDoMapa = JSON.parse(dadosMapa);
     
-    L.tileLayer(`https://api.maptiler.com/maps/${ESTILO_MAPA}/256/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`, {
-        attribution: '&copy; MapTiler &copy; OpenStreetMap',
-        crossOrigin: true
-    }).addTo(mapaRoteiro);
+    const dadosMultiplosRoteiros = localStorage.getItem('listaDeRoteiros');
+    const indexSalvo = localStorage.getItem('roteiroIndexAtual');
     
-    camadaLojas.addTo(mapaRoteiro);
+    if (dadosMultiplosRoteiros) {
+        listaDeRoteiros = JSON.parse(dadosMultiplosRoteiros);
+    }
+    if (indexSalvo) {
+        roteiroIndexAtual = parseInt(indexSalvo, 10);
+    }
 
-    lerRoteiroDoBanco();
+    renderizarPaineis();
 }
 
-// ==========================================
-// INTEGRAÇÃO COM O FIREBASE (VIA C#)
-// ==========================================
+function renderizarPaineis() {
+    renderizarLocaisSalvos();
+    renderizarAreaPersonalizacao();
+    atualizarComponentesInterface();
+}
 
-// 1. Função para LER do banco (o seu amigo precisa criar essa rota no C#)
-async function lerRoteiroDoBanco() {
-    const divRoteiro = document.getElementById('roteiro-salvo');
+function atualizarComponentesInterface() {
+    const divPersonalizacao = document.getElementById('area-personalizacao');
+    const badge = document.getElementById('status-modo');
+    const btnEditar = document.getElementById('btn-modo-editar');
     
-    try {
-        // Exemplo da rota que seu amigo vai fazer para ler os dados
-        // const response = await fetch('http://localhost:5125/api/meu-roteiro');
-        // const dados = await response.json();
-        
-        // Como o back-end ainda não está pronto, vamos simular que o banco está vazio por enquanto
-        const dados = null; 
+    // Captura os botões de navegação
+    const btnVoltar = document.getElementById('btn-voltar-roteiro');
+    const btnProximo = document.getElementById('btn-proximo-roteiro');
 
-        if (dados) {
-            divRoteiro.innerHTML = `
-                <strong>${dados.nome}</strong><br>
-                <small>${dados.endereco}</small>
-            `;
-            mapaRoteiro.flyTo([dados.lat, dados.lng], 18);
-            L.marker([dados.lat, dados.lng]).addTo(mapaRoteiro).bindPopup("<b>Seu Roteiro!</b>").openPopup();
-        } else {
-            divRoteiro.innerHTML = "<p>Nenhuma visita marcada ainda.</p>";
-        }
-    } catch (erro) {
-        divRoteiro.innerHTML = "<p style='color:red;'>Erro ao carregar roteiro do banco.</p>";
+    // Atualiza o texto do título informando qual roteiro está ativo
+    document.querySelector('.coluna-direita h3').childNodes[0].textContent = `📅 Roteiro #${roteiroIndexAtual + 1} `;
+
+    // Trava/Destrava botões de navegação cronológica
+    btnVoltar.disabled = (roteiroIndexAtual === 0);
+    btnProximo.disabled = (roteiroIndexAtual === listaDeRoteiros.length - 1);
+
+    if (modoEdicaoAtivo) {
+        divPersonalizacao.classList.add('modo-edicao');
+        badge.textContent = "Personalizando";
+        badge.className = "status-badge badge-editar";
+        btnEditar.textContent = "🔒 Finalizar";
+    } else {
+        divPersonalizacao.classList.remove('modo-edicao');
+        badge.textContent = "Visualizando";
+        badge.className = "status-badge badge-visualizar";
+        btnEditar.textContent = "✏️ Editar";
     }
 }
 
-// 2. Função para SALVAR no banco (o seu amigo precisa criar essa rota no C#)
-async function salvarRoteiroNoBanco(nome, endereco, lat, lng) {
-    const divRoteiro = document.getElementById('roteiro-salvo');
-    divRoteiro.innerHTML = "<p>Salvando nas nuvens...</p>";
-
-    const dadosDoRoteiro = {
-        nome: nome,
-        endereco: endereco,
-        lat: lat,
-        lng: lng
-    };
-
-    try {
-        /* AQUI ENTRA A MÁGICA: Mandando os dados pro C# salvar no Firebase
-        Você vai descomentar isso quando seu amigo criar a rota POST.
-        
-        await fetch('http://localhost:5125/api/salvar-roteiro', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dadosDoRoteiro)
-        });
-        */
-
-        // Simulação de sucesso até o C# ficar pronto
-        setTimeout(() => {
-            alert("Roteiro salvo no Firebase com sucesso!");
-            divRoteiro.innerHTML = `
-                <strong>${nome}</strong><br>
-                <small>${endereco}</small>
-                <br><span style="color: green;">✔ Salvo nas nuvens!</span>
-            `;
-        }, 1000);
-
-    } catch (erro) {
-        alert("Erro ao salvar no banco de dados.");
-    }
+function activarModoEdicao() {
+    modoEdicaoAtivo = !modoEdicaoAtivo;
+    renderizarPaineis();
 }
 
-// ==========================================
-// BUSCA DA TOMTOM (Igual ao mapa.js)
-// ==========================================
-async function mudarLocalizacaoRoteiro(endereco) {
-    if (!endereco) return;
-    try {
-        const response = await fetch(`http://localhost:5125/api/buscar-endereco?endereco=${encodeURIComponent(endereco)}`);
-        const local = await response.json();
-        posicaoUsuario = L.latLng(local.lat, local.lng);
-        mapaRoteiro.flyTo(posicaoUsuario, 15);
-    } catch {
-        alert("Local não encontrado em Minas.");
+/* COLUNA ESQUERDA: Estoque */
+function renderizarLocaisSalvos() {
+    const container = document.getElementById('lista-locais-salvos');
+    container.innerHTML = '';
+
+    if (locaisDoMapa.length === 0) {
+        container.innerHTML = '<p style="color: gray; text-align: center; font-size:0.9em;">Nenhum local disponível no mapa.</p>';
+        return;
     }
+
+    locaisDoMapa.forEach((local, index) => {
+        const card = document.createElement('div');
+        card.className = 'card-local';
+        
+        const acaoBotao = modoEdicaoAtivo 
+            ? `<button class="btn-card btn-puxar" onclick="puxarParaDivPersonalizacao(${index})">Puxar para Roteiro ➡️</button>`
+            : `<button class="btn-card" style="background-color:#ccc; cursor:not-allowed;" disabled>Clique em Editar</button>`;
+
+        card.innerHTML = `
+            <strong>${local.nome}</strong>
+            <small style="display: block; color: gray;">${local.endereco}</small>
+            ${acaoBotao}
+        `;
+        container.appendChild(card);
+    });
 }
 
-async function buscarLojasRoteiro(termo) {
-    if (!termo) return;
-    const listaBusca = document.getElementById('lista-busca-roteiro');
-    listaBusca.innerHTML = '<li class="store-item">Buscando lugares para seu roteiro...</li>';
+/* COLUNA DIREITA: Área de personalização do roteiro atual */
+function renderizarAreaPersonalizacao() {
+    const container = document.getElementById('area-personalizacao');
+    container.innerHTML = '';
 
-    try {
-        const url = `http://localhost:5125/api/buscar-lojas?termo=${encodeURIComponent(termo)}&lat=${posicaoUsuario.lat}&lng=${posicaoUsuario.lng}`;
-        const response = await fetch(url);
-        const lojas = await response.json();
+    const roteiroAtual = listaDeRoteiros[roteiroIndexAtual] || [];
 
-        camadaLojas.clearLayers();
-        listaBusca.innerHTML = '';
-        
-        if (lojas.length === 0) {
-            listaBusca.innerHTML = '<li class="store-item">Nenhum local encontrado.</li>';
-            return;
-        }
+    if (roteiroAtual.length === 0) {
+        container.innerHTML = '<p style="color: gray; text-align: center; padding-top: 150px;">Área de personalização vazia.<br>Ative o modo "Editar" para puxar locais para este roteiro.</p>';
+        return;
+    }
 
-        lojas.forEach(l => {
-            const pino = L.marker([l.lat, l.lng]).bindPopup(`<b>${l.nome}</b>`);
-            camadaLojas.addLayer(pino);
-            
-            const li = document.createElement('li');
-            li.className = 'store-item';
-            
-            // O botão agora não é só "Ver", é "Criar Roteiro"
-            li.innerHTML = `
-                <div>
-                    <strong>${l.nome}</strong>
-                    <small style="display:block; color:gray;">📍 ${l.distancia.toFixed(2)} km</small>
+    roteiroAtual.forEach((local, index) => {
+        const dia = local.dia || '';
+        const hora = local.hora || '';
+        const camposBloqueados = modoEdicaoAtivo ? '' : 'disabled';
+        const botaoRemover = modoEdicaoAtivo 
+            ? `<button class="btn-card btn-remover" onclick="devolverParaEstoque(${index})">⬅️ Remover da lista</button>` 
+            : '';
+
+        const card = document.createElement('div');
+        card.className = 'card-local no-roteiro';
+        card.innerHTML = `
+            <strong>${local.nome}</strong>
+            <small style="display: block; color: gray;">${local.endereco}</small>
+            <div class="campos-tempo">
+                <div class="campo-grupo">
+                    <label>Dia</label>
+                    <input type="date" value="${dia}" ${camposBloqueados} onchange="atualizarDadosTempo(${index}, 'dia', this.value)">
                 </div>
-                <button class="btn-favorite" style="background-color: #d32f2f; margin-top: 5px; width: 100%;" 
-                    onclick="salvarRoteiroNoBanco('${l.nome.replace(/'/g, "\\'")}', '${l.endereco.replace(/'/g, "\\'")}', ${l.lat}, ${l.lng})">
-                    Definir como Roteiro
-                </button>
-            `;
-            listaBusca.appendChild(li);
-        });
-        
-    } catch {
-        listaBusca.innerHTML = '<li class="store-item" style="color:red;">Erro ao conectar com a API.</li>';
+                <div class="campo-grupo">
+                    <label>Hora</label>
+                    <input type="time" value="${hora}" ${camposBloqueados} onchange="atualizarDadosTempo(${index}, 'hora', this.value)">
+                </div>
+            </div>
+            ${botaoRemover}
+        `;
+        container.appendChild(card);
+    });
+}
+
+/* CONTROLES DE MOVIMENTAÇÃO */
+function puxarParaDivPersonalizacao(index) {
+    const item = locaisDoMapa[index];
+    locaisDoMapa.splice(index, 1);
+    
+    if(!listaDeRoteiros[roteiroIndexAtual]) listaDeRoteiros[roteiroIndexAtual] = [];
+    listaDeRoteiros[roteiroIndexAtual].push({ ...item, dia: '', hora: '' });
+    
+    salvarProgressoLocal();
+    renderizarPaineis();
+}
+
+function devolverParaEstoque(index) {
+    const item = listaDeRoteiros[roteiroIndexAtual][index];
+    delete item.dia;
+    delete item.hora;
+    
+    listaDeRoteiros[roteiroIndexAtual].splice(index, 1);
+    locaisDoMapa.push(item);
+    
+    salvarProgressoLocal();
+    renderizarPaineis();
+}
+
+function atualizarDadosTempo(index, campo, valor) {
+    listaDeRoteiros[roteiroIndexAtual][index][campo] = valor;
+    salvarProgressoLocal();
+}
+
+/* SISTEMA DE NAVEGAÇÃO ENTRE MÚLTIPLOS ROTEIROS */
+function criarNovoRoteiro() {
+    listaDeRoteiros.push([]); // Adiciona um novo roteiro em branco na lista
+    roteiroIndexAtual = listaDeRoteiros.length - 1; // Pula direto para ele
+    modoEdicaoAtivo = true; // Abre em modo de edição para facilitar
+    salvarProgressoLocal();
+    renderizarPaineis();
+    alert(`Novo espaço criado! Você agora está editando o Roteiro #${roteiroIndexAtual + 1}`);
+}
+
+function proximoRoteiro() {
+    if (roteiroIndexAtual < listaDeRoteiros.length - 1) {
+        roteiroIndexAtual++;
+        modoEdicaoAtivo = false;
+        salvarProgressoLocal();
+        renderizarPaineis();
     }
 }
 
-// Eventos de Enter nas barras de pesquisa
-document.addEventListener('DOMContentLoaded', () => {
-    const inputLocal = document.getElementById('inputLocalRoteiro');
-    const inputLoja = document.getElementById('inputLojaRoteiro');
+function roteiroAnterior() {
+    if (roteiroIndexAtual > 0) {
+        roteiroIndexAtual--;
+        modoEdicaoAtivo = false;
+        salvarProgressoLocal();
+        renderizarPaineis();
+    }
+}
 
-    if (inputLocal) inputLocal.addEventListener('keypress', (e) => { if (e.key === 'Enter') mudarLocalizacaoRoteiro(e.target.value.trim()); });
-    if (inputLoja) inputLoja.addEventListener('keypress', (e) => { if (e.key === 'Enter') buscarLojasRoteiro(e.target.value.trim()); });
-});
+function salvarProgressoLocal() {
+    localStorage.setItem('meusLocaisRoteiro', JSON.stringify(locaisDoMapa));
+    localStorage.setItem('listaDeRoteiros', JSON.stringify(listaDeRoteiros));
+    localStorage.setItem('roteiroIndexAtual', roteiroIndexAtual.toString());
+}
 
-iniciarMapaRoteiro();
+function limparRoteiroCompleto() {
+    if (confirm("Quer mesmo apagar este roteiro específico?")) {
+        listaDeRoteiros.splice(roteiroIndexAtual, 1);
+        if (listaDeRoteiros.length === 0) listaDeRoteiros.push([]);
+        roteiroIndexAtual = 0;
+        modoEdicaoAtivo = false;
+        salvarProgressoLocal();
+        renderizarPaineis();
+    }
+}
+
+function salvarNoBanco() {
+    const atual = listaDeRoteiros[roteiroIndexAtual] || [];
+    if (atual.length === 0) {
+        alert("Este roteiro está em branco!");
+        return;
+    }
+    modoEdicaoAtivo = false;
+    renderizarPaineis();
+    alert(`Roteiro #${roteiroIndexAtual + 1} salvo com sucesso localmente! Pronto para enviar ao banco.`);
+    console.log("Objeto enviado para as rotas C#:", atual);
+}
+
+carregarDadosIniciais();

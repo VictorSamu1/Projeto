@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Roteiro - Aqui é bão, Uai!!</title>
+    <title>Planejar Meu Roteiro - Aqui é bão, Uai!!</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-
-    <link rel="stylesheet" href="CSS/map.css">
     <link rel="stylesheet" href="CSS/roteiro.css">
+    <link rel="stylesheet" href="CSS/index.css">
 </head>
 <body>
     <header>
@@ -22,38 +19,35 @@
                 <a href="mapa.html">Mapa</a>
                 <a href="roteiro.html">Roteiro</a>
             </nav>
-            
-            <div class="header-actions-map">
-                <div class="search-box">
-                    <input type="text" id="inputLocalRoteiro" class="search-input" placeholder="1. Onde ir? (Ex: BH...)">
-                </div>
-                <div class="search-box">
-                    <input type="text" id="inputLojaRoteiro" class="search-input" placeholder="2. Qual loja/lugar?">
-                </div>
-            </div>
         </div>
     </header>
 
-    <main class="container map-container">
-        <section class="map-wrapper">
-    <div id="meuMapa"></div>
-</section>
-
-        <aside class="map-sidebar">
-            <div class="sidebar-content" style="margin-bottom: 20px; border-bottom: 2px solid #ddd; padding-bottom: 10px;">
-                <h3 style="color: #d32f2f;">Seu Roteiro Atual</h3>
-                <div id="roteiro-salvo">
-                    <p>Carregando do banco de dados...</p>
+    <main class="painel-roteiro">
+        <section class="coluna-esquerda">
+            <h3 style="margin-top:0; color: #ff9800;">📍 Locais Salvos do Mapa</h3>
+            <p style="font-size: 0.85em; color: gray;">Escolha os lugares aqui para enviar para a div de personalização.</p>
+            <div id="lista-locais-salvos">
                 </div>
-            </div>
+        </section>
 
-            <div class="sidebar-content">
-                <h3>Resultados da Busca</h3>
-                <ul class="store-list" id="lista-busca-roteiro">
-                    <li class="store-item">Use a pesquisa no topo para encontrar um novo local para visitar.</li>
-                </ul>
-            </div>
-        </aside>
+        <section class="coluna-direita">
+            <h3 style="margin-top:0; color: #333;">
+                📅 Cronograma da Viagem 
+                <span id="status-modo" class="status-badge badge-visualizar">Visualizando</span>
+            </h3>
+            
+            <div id="area-personalizacao" class="div-personalizacao">
+                </div>
+
+           <div class="botoes-controle">
+    <button id="btn-voltar-roteiro" class="btn-controle btn-navegacao" onclick="roteiroAnterior()">⬅️ Voltar</button>
+    <button id="btn-criar-roteiro" class="btn-controle btn-criar" onclick="criarNovoRoteiro()">➕ Criar Roteiro</button>
+    <button id="btn-modo-editar" class="btn-controle btn-editar" onclick="ativarModoEdicao()">✏️ Editar</button>
+    <button id="btn-modo-salvar" class="btn-controle btn-salvar" onclick="salvarNoBanco()">💾 Salvar</button>
+    <button id="btn-proximo-roteiro" class="btn-controle btn-proximo" onclick="proximoRoteiro()">Próximo ➡️</button>
+    <button id="btn-modo-apagar" class="btn-controle btn-apagar" onclick="limparRoteiroCompleto()">🗑️ Apagar</button>
+</div>
+        </section>
     </main>
 
     <script src="js/roteiro.js"></script>
