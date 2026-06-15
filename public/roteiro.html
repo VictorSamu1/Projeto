@@ -10,12 +10,6 @@
 
     <link rel="stylesheet" href="CSS/map.css">
     <link rel="stylesheet" href="CSS/roteiro.css">
-    
-    <style>
-        .roteiro-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; text-align: center; }
-        .roteiro-box h2 { color: #d32f2f; margin-bottom: 10px; }
-        .btn-voltar { display: inline-block; padding: 10px 20px; background: #d32f2f; color: white; text-decoration: none; border-radius: 5px; margin-top: 15px; }
-    </style>
 </head>
 <body>
     <header>
@@ -28,25 +22,39 @@
                 <a href="mapa.html">Mapa</a>
                 <a href="roteiro.html">Roteiro</a>
             </nav>
+            
+            <div class="header-actions-map">
+                <div class="search-box">
+                    <input type="text" id="inputLocalRoteiro" class="search-input" placeholder="1. Onde ir? (Ex: BH...)">
+                </div>
+                <div class="search-box">
+                    <input type="text" id="inputLojaRoteiro" class="search-input" placeholder="2. Qual loja/lugar?">
+                </div>
+            </div>
         </div>
     </header>
 
-    <main class="container map-container" style="display: block; max-width: 800px; margin: 20px auto;">
-        
-        <div id="info-roteiro" class="roteiro-box">
-            <h2>Carregando seu roteiro...</h2>
-        </div>
+    <main class="container map-container">
+        <section class="map-wrapper">
+    <div id="meuMapa"></div>
+</section>
 
-        <section class="map-wrapper" style="height: 400px; border-radius: 8px; overflow: hidden;">
-            <div id="mapaRoteiro" style="height: 100%; width: 100%;"></div>
-        </section>
+        <aside class="map-sidebar">
+            <div class="sidebar-content" style="margin-bottom: 20px; border-bottom: 2px solid #ddd; padding-bottom: 10px;">
+                <h3 style="color: #d32f2f;">Seu Roteiro Atual</h3>
+                <div id="roteiro-salvo">
+                    <p>Carregando do banco de dados...</p>
+                </div>
+            </div>
 
+            <div class="sidebar-content">
+                <h3>Resultados da Busca</h3>
+                <ul class="store-list" id="lista-busca-roteiro">
+                    <li class="store-item">Use a pesquisa no topo para encontrar um novo local para visitar.</li>
+                </ul>
+            </div>
+        </aside>
     </main>
-
-    <footer>
-        <p>Contato: (31) 9999-9999 | contato@aquiebao.com.br</p> 
-        <p>2026 - Aqui é bão, Uai!!</p> 
-    </footer>
 
     <script src="js/roteiro.js"></script>
 </body>
