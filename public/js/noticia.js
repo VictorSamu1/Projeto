@@ -27,7 +27,14 @@ async function carregarNoticiasMG() {
 
     } catch (erro) {
         console.error("Erro ao carregar notícias:", erro);
-        container.innerHTML = `<p class="erro-noticias">Não foi possível carregar as notícias. Tente novamente mais tarde.</p>`;
+        
+        // Proteção: Só exibe a mensagem de erro se a div estiver vazia.
+        // Se já existirem notícias renderizadas, elas ficam intactas na tela!
+        if (!container.innerHTML.trim() || container.querySelector('.item-card') === null) {
+            container.innerHTML = `<p class="erro-noticias">Não foi possível carregar as notícias. Tente novamente mais tarde.</p>`;
+        } else {
+            console.warn("A API falhou na atualização de background, mas as notícias antigas continuam na tela.");
+        }
     }
 }
 
