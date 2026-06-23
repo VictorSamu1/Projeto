@@ -1,112 +1,166 @@
-/* ========================================================
-   CSS DE PERFIL - ESTILO INTEGRADO "AQUI É BÃO"
-======================================================== */
-
+/* ==========================================================================
+   1. VARIÁVEIS (DESIGN TOKENS)
+   ========================================================================== */
 :root {
-    color-scheme: light;
-    font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
+    --color-primary: #FF0000;
+    --color-primary-dark: #c0392b;
+    --color-primary-light: #fff5f5;
+    
+    --color-bg-body: #f4f4f8;
+    --color-bg-card: #ffffff;
+    --color-text-main: #2b2b2b;
+    --color-text-muted: #444444;
+    --color-text-light: #ffffff;
+
+    --font-family-base: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    --font-family-heading: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+
+    --container-max-width: 1200px;
+    --transition-speed: 0.2s;
 }
 
+/* ==========================================================================
+   2. RESET & CONFIGURAÇÕES BASE
+   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-html {
-    background: linear-gradient(180deg, #f9f6f2 0%, #f4f4f8 100%);
-}
-
 body {
-    position: relative;
+    background: linear-gradient(180deg, #f9f6f2 0%, var(--color-bg-body) 100%);
+    color: var(--color-text-main);
+    font-family: var(--font-family-base);
+    font-weight: 400;
+    line-height: 1.6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* --- IMAGEM DE FUNDO DO SITE (OPACIDADE 0.75) --- */
+/* Fundo geral do site com a opacidade exata (0.9) */
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background-image: url('../imagens_geral/fundo_site.png');
     background-repeat: repeat;
     background-size: 400px;
-    opacity: 0.75;
-    z-index: -1;
-    pointer-events: none;
+    opacity: 0.9; 
+    z-index: -1; 
+    pointer-events: none; 
 }
 
-/* --- CABEÇALHO PADRONIZADO --- */
+/* ==========================================================================
+   3. CABEÇALHO (HEADER) - COM O SEU VISUAL CUSTOMIZADO
+   ========================================================================== */
 header {
-    background: linear-gradient(135deg, #FF0000 0%, #FF0000 100%);
-    color: #fff;
-    padding: 24px 16px;
+    background: linear-gradient(rgba(255, 255, 255, 0.281), rgba(255, 255, 255, 0.65)), url('../imagens_geral/fundo_header.png');
+    background-size: 100% auto; 
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
+    
+    padding: 40px 16px;
     position: relative;
-    text-align: center;
-    min-height: 190px;
+    border-top: 5px solid var(--color-primary);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+    animation: slideDownFade 0.6s ease-out forwards;
+}
+
+@keyframes slideDownFade {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .logo {
     position: absolute;
     top: 32px;
     left: 4%;
-    width: 160px;
-    height: 160px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #fff;
-    border: 3px solid #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+}
+
+.logo:hover {
+    transform: scale(1.08) rotate(5deg);
 }
 
 .header-inner {
-    max-width: 1200px;
+    max-width: 700px; 
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 15px;
+    text-align: center;
+    
+    /* CAIXA DE VIDRO FOSCO REFORÇADA PARA LEITURA */
+    background: rgba(255, 255, 255, 0.178); 
+    backdrop-filter: blur(2px); 
+    -webkit-backdrop-filter: blur(10px); 
+    padding: 24px 40px;
+    border-radius: 30px;
+    border: 1px solid rgb(179, 4, 4); 
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); 
 }
 
 header h1 {
-    margin: 0;
     font-size: clamp(1.8rem, 2.5vw, 3rem);
     line-height: 1.1;
-    font-family: Georgia, serif;
-    padding-top: 10px;
+    font-family: var(--font-family-heading);
+    color: var(--color-primary); 
 }
 
+/* ==========================================================================
+   4. MENU, LINKS E SISTEMA DE PERFIL NO HEADER
+   ========================================================================== */
 nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 18px;
     justify-content: center;
-    margin-top: 15px;
 }
 
 nav a {
-    color: #fff;
+    color: var(--color-text-main); 
     text-decoration: none;
-    padding: 10px 16px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.16);
-    transition: background 0.2s ease, transform 0.2s ease;
-    font-family: Georgia, serif;
+    padding: 8px 12px;
+    font-family: var(--font-family-heading);
     font-weight: bold;
+    font-size: 1.1rem;
+    position: relative;
+    transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 3px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-primary);
+    transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 2px;
 }
 
 nav a:hover {
-    background: rgba(255, 255, 255, 0.32);
-    transform: translateY(-1px);
+    color: var(--color-primary); 
+    transform: translateY(-2px);
 }
 
-/* MENU DE USUÁRIO */
+nav a:hover::after {
+    width: 80%; 
+}
+
 .header-user-menu {
     position: absolute;
     top: 32px;
@@ -115,23 +169,34 @@ nav a:hover {
     align-items: center;
     gap: 15px;
     z-index: 10;
+    
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 8px 12px;
+    border-radius: 999px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
 }
 
 .btn-entrar {
-    color: #fff;
-    font-family: Georgia, serif;
+    color: var(--color-primary);
+    background: #ffffff; 
+    border: 2px solid var(--color-primary);
+    font-family: var(--font-family-heading);
     font-weight: bold;
     font-size: 1.05rem;
-    background: rgba(255, 255, 255, 0.16);
-    padding: 8px 18px;
-    border-radius: 8px;
+    padding: 6px 18px;
+    border-radius: 12px;
     text-decoration: none;
-    transition: background 0.2s ease, transform 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .btn-entrar:hover {
-    background: rgba(255, 255, 255, 0.32);
+    background: var(--color-primary);
+    color: #fff;
     transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(229, 57, 53, 0.2);
 }
 
 .container-perfil {
@@ -140,20 +205,22 @@ nav a:hover {
 }
 
 .container-perfil:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 .bolinha-perfil {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border: 3px solid var(--color-primary);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     background-color: #f9f6f2;
 }
 
-/* --- CONTAINER E CARD DO PERFIL --- */
+/* ==========================================================================
+   5. CONTAINER E CARD DO PERFIL (ORIGINAIS DA PÁGINA)
+   ========================================================================== */
 .profile-container {
     max-width: 900px;
     width: 100%;
@@ -182,8 +249,8 @@ nav a:hover {
     height: 100%;
     background-size: cover;
     background-position: center;
-    opacity: 0.45; /* Banner menos opaco que a foto principal */
-    filter: blur(4px); /* Suave desfoque para dar profundidade estética */
+    opacity: 0.45; 
+    filter: blur(4px); 
 }
 
 /* Posicionamento afastado e sobposto da bolinha */
@@ -227,7 +294,7 @@ nav a:hover {
     transform: scale(1.1);
 }
 
-/* --- CONTEÚDO IMPRESO DO PERFIL --- */
+/* --- CONTEÚDO INTERNO DO PERFIL --- */
 .profile-content {
     padding: 60px 40px 40px 40px;
 }
@@ -298,7 +365,6 @@ nav a:hover {
     box-shadow: 0 6px 15px rgba(255, 0, 0, 0.3);
 }
 
-/* Estado de salvar alterações */
 .saving-mode {
     background: linear-gradient(135deg, #27ae60 0%, #219653 100%) !important;
     box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2) !important;
@@ -429,19 +495,25 @@ nav a:hover {
     display: none !important;
 }
 
-/* --- RESPONSIVIDADE --- */
+/* ==========================================================================
+   6. RODAPÉ E RESPONSIVIDADE
+   ========================================================================== */
+footer {
+    background: #111;
+    color: #ccc;
+    text-align: center;
+    padding: 24px 16px;
+    font-size: 0.95rem;
+    margin-top: auto;
+}
+
 @media (max-width: 768px) {
-    .header-user-menu {
-        top: 20px;
-        right: 15px;
-    }
-    .bolinha-perfil {
-        width: 45px;
-        height: 45px;
-    }
-    .btn-entrar {
-        display: none;
-    }
+    header { padding-top: 40px; }
+    .header-user-menu { top: 15px; right: 15px; background: transparent; backdrop-filter: none; box-shadow: none; border: none;}
+    .bolinha-perfil { width: 45px; height: 45px; }
+    .btn-entrar { display: none; }
+    .logo { position: static; margin: 0 auto; margin-bottom: 15px; }
+
     .profile-content {
         padding: 60px 20px 20px 20px;
     }

@@ -1,118 +1,164 @@
-/* ========================================================
-   CSS DE AUTENTICAÇÃO - ESTILO INTEGRADO "AQUI É BÃO"
-======================================================== */
-
+/* ==========================================================================
+   1. VARIÁVEIS (DESIGN TOKENS)
+   ========================================================================== */
 :root {
-    color-scheme: light;
-    font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    color: #2b2b2b;
+    --color-primary: #FF0000;
+    --color-primary-dark: #c0392b;
+    --color-primary-light: #fff5f5;
+    
+    --color-bg-body: #f4f4f8;
+    --color-bg-card: #ffffff;
+    --color-text-main: #2b2b2b;
+    --color-text-muted: #444444;
+    --color-text-light: #ffffff;
+
+    --font-family-base: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    --font-family-heading: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+
+    --transition-speed: 0.2s;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* --- A COR SÓLIDA VEM PARA O HTML PARA NÃO ESCONDER A IMAGEM --- */
-html {
-    background-color: #f9f6f2; 
-}
+/* ==========================================================================
+   2. RESET & CONFIGURAÇÕES BASE
+   ========================================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    position: relative;
-    /* Retiramos a cor sólida daqui */
+    background: linear-gradient(180deg, #f9f6f2 0%, var(--color-bg-body) 100%);
+    color: var(--color-text-main);
+    font-family: var(--font-family-base);
+    font-weight: 400;
+    line-height: 1.6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* --- CONTROLE DE OPACIDADE DA IMAGEM DE FUNDO --- */
+/* Fundo geral do site com a opacidade 0.9 */
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background-image: url('../imagens_geral/fundo_site.png');
     background-repeat: repeat;
     background-size: 400px;
-    
-    /* Pode ajustar a opacidade aqui (0.15 = 15%) */
-    opacity: 0.75; 
-    
+    opacity: 0.9; 
     z-index: -1; 
     pointer-events: none; 
 }
 
-/* --- CABEÇALHO COMPATÍVEL --- */
+/* ==========================================================================
+   3. CABEÇALHO (HEADER) - COM O SEU VISUAL CUSTOMIZADO
+   ========================================================================== */
 header {
-    background: linear-gradient(135deg, #FF0000 0%, #FF0000 100%);
-    color: #fff;
-    padding: 24px 16px;
+    background: linear-gradient(rgba(255, 255, 255, 0.281), rgba(255, 255, 255, 0.65)), url('../imagens_geral/fundo_header.png');
+    background-size: 100% auto; 
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
+    
+    padding: 40px 16px;
     position: relative;
-    text-align: center;
-    min-height: 220px; 
+    border-top: 5px solid var(--color-primary);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+    animation: slideDownFade 0.6s ease-out forwards;
+}
+
+@keyframes slideDownFade {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .logo {
     position: absolute;
     top: 32px;
     left: 4%;
-    width: 160px;
-    height: 160px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #fff;
-    border: 3px solid #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+}
+
+.logo:hover {
+    transform: scale(1.08) rotate(5deg);
 }
 
 .header-inner {
-    max-width: 1200px;
+    max-width: 700px; 
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 18px;
+    gap: 15px;
+    text-align: center;
+    
+    /* CAIXA DE VIDRO FOSCO REFORÇADA PARA LEITURA */
+    background: rgba(255, 255, 255, 0.178); 
+    backdrop-filter: blur(2px); 
+    -webkit-backdrop-filter: blur(10px); 
+    padding: 24px 40px;
+    border-radius: 30px;
+    border: 1px solid rgb(179, 4, 4); 
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); 
 }
 
 header h1 {
-    margin: 0;
     font-size: clamp(1.8rem, 2.5vw, 3rem);
     line-height: 1.1;
-    font-family: Georgia, serif;
-    padding-top: 10px;
+    font-family: var(--font-family-heading);
+    color: var(--color-primary); 
 }
 
+/* ==========================================================================
+   4. MENU E LINKS NO HEADER
+   ========================================================================== */
 nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 18px;
     justify-content: center;
 }
 
 nav a {
-    color: #fff;
+    color: var(--color-text-main); 
     text-decoration: none;
-    padding: 10px 16px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.16);
-    transition: background 0.2s ease, transform 0.2s ease;
-    font-family: Georgia, serif;
+    padding: 8px 12px;
+    font-family: var(--font-family-heading);
     font-weight: bold;
+    font-size: 1.1rem;
+    position: relative;
+    transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 3px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-primary);
+    transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 2px;
 }
 
 nav a:hover {
-    background: rgba(255, 255, 255, 0.32);
-    transform: translateY(-1px);
+    color: var(--color-primary); 
+    transform: translateY(-2px);
 }
 
-/* --- CONTAINER DO CARD DE AUTENTICAÇÃO --- */
+nav a:hover::after {
+    width: 80%; 
+}
+
+/* ==========================================================================
+   5. CONTAINER E CARD DE AUTENTICAÇÃO (ORIGINAIS DA PÁGINA)
+   ========================================================================== */
 .auth-container {
     flex: 1;
     display: flex;
@@ -129,13 +175,13 @@ nav a:hover {
     width: min(100%, 450px);
     border-radius: 24px;
     padding: 40px 30px;
-    border: 2px solid #FF0000;
+    border: 2px solid var(--color-primary);
     box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
 }
 
 .auth-form-block h2 {
-    color: #FF0000;
-    font-family: Georgia, serif;
+    color: var(--color-primary);
+    font-family: var(--font-family-heading);
     font-size: 1.8rem;
     margin-bottom: 6px;
     text-align: center;
@@ -184,12 +230,12 @@ nav a:hover {
 /* --- BOTÃO DE AÇÃO CRUCIAL --- */
 .btn-auth {
     width: 100%;
-    background: linear-gradient(135deg, #FF0000 0%, #cc0000 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     color: white;
     border: none;
     padding: 14px;
     font-size: 1.1rem;
-    font-family: Georgia, serif;
+    font-family: var(--font-family-heading);
     font-weight: bold;
     border-radius: 999px;
     cursor: pointer;
@@ -211,7 +257,7 @@ nav a:hover {
 }
 
 .auth-toggle a {
-    color: #FF0000;
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: bold;
 }
@@ -224,26 +270,19 @@ nav a:hover {
     display: none !important;
 }
 
-/* --- RODAPÉ --- */
+/* ==========================================================================
+   6. RODAPÉ E RESPONSIVIDADE
+   ========================================================================== */
 footer {
-    background: #222;
-    color: #ddd;
+    background: #111;
+    color: #ccc;
     text-align: center;
-    padding: 20px 16px;
+    padding: 24px 16px;
     font-size: 0.95rem;
     margin-top: auto;
 }
 
-footer p {
-    margin: 8px 0;
-}
-
 @media (max-width: 768px) {
-    .logo {
-        position: static;
-        margin: 0 auto 15px auto;
-    }
-    header {
-        min-height: auto;
-    }
+    header { padding-top: 40px; }
+    .logo { position: static; margin: 0 auto; margin-bottom: 15px; }
 }

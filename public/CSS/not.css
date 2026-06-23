@@ -1,4 +1,4 @@
-/* noticia.css - Estilo exclusivo para o Portal de Notícias MG */
+/* noticia.css - Estilo exclusivo para os cards do Portal de Notícias MG */
 
 :root {
     --vermelho-minas: #d32f2f;
@@ -41,8 +41,7 @@
     height: 200px;
     object-fit: cover;
     border-bottom: 1px solid #eee;
-
-    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
 }
 
 /* Conteúdo do texto no Card */
@@ -72,39 +71,6 @@
     font-style: italic;
     color: var(--vermelho-minas);
     font-size: 1.2rem;
-}
-
-/* Ajuste do header para página de notícias, igual ao login */
-header {
-    background: linear-gradient(135deg, #FF0000 0%, #FF0000 100%);
-    color: #fff;
-    padding: 24px 16px;
-    position: relative;
-    text-align: center;
-    min-height: 220px;
-}
-
-.logo {
-    position: absolute;
-    top: 32px;
-    left: 4%;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: #fff;
-    border: 3px solid #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-.header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
 }
 
 /* Conteúdo interno do card (texto) */
@@ -141,8 +107,7 @@ header {
     background: linear-gradient(180deg, #f8f8f8, #efefef);
     font-size: 3rem;
     color: #dcdcdc;
-
-    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
 }
 
 /* Ajuste do título dentro do conteúdo para visual mais compacto */
@@ -161,34 +126,4 @@ header {
 
 .item-card--noticia:visited {
     color: inherit;
-}
-
-/* --- IMAGEM DE FUNDO COM OPACIDADE 0.75 --- */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../imagens_geral/fundo_site.png');
-    background-repeat: repeat;
-    background-size: 400px;
-    opacity: 0.75; 
-    z-index: -1; 
-    pointer-events: none; 
-}
-
-/* --- RODAPÉ --- */
-footer {
-    background: #222;
-    color: #ddd;
-    text-align: center;
-    padding: 20px 16px;
-    font-size: 0.95rem;
-    margin-top: auto;
-}
-
-footer p {
-    margin: 8px 0;
 }

@@ -1,27 +1,24 @@
 /* ==========================================================================
-   1. VARIÁVEIS (DESIGN TOKENS) - TEMA LIGHT SUAVE
+   1. VARIÁVEIS (DESIGN TOKENS)
    ========================================================================== */
 :root {
-    /* Cores Principais - Agora usadas apenas para detalhes e botões */
-    --color-primary: #e53935; /* Vermelho um pouco mais suave e moderno */
-    --color-primary-dark: #b71c1c;
+    --color-primary: #FF0000;
+    --color-primary-dark: #c0392b;
     --color-primary-light: #fff5f5;
     
-    /* Cores de Fundo e Texto - O novo padrão claro */
     --color-bg-body: #f4f4f8;
     --color-bg-card: #ffffff;
-    --color-text-main: #2b2b2b; /* Quase preto */
-    --color-text-muted: #666666;
+    --color-text-main: #2b2b2b;
+    --color-text-muted: #444444;
     --color-text-light: #ffffff;
 
-    /* Tipografia Nova (Títulos em Comic Sans) */
     --font-family-base: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    /* Fonte nova apenas para os títulos */
     --font-family-heading: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
 
-    /* Estrutura */
     --container-max-width: 1200px;
     --border-radius-card: 24px;
-    --transition-speed: 0.3s;
+    --transition-speed: 0.2s;
 }
 
 /* ==========================================================================
@@ -34,15 +31,13 @@
 }
 
 body {
-    background: linear-gradient(180deg, #ffffff 0%, var(--color-bg-body) 100%);
+    background: linear-gradient(180deg, #f9f6f2 0%, var(--color-bg-body) 100%);
     color: var(--color-text-main);
     font-family: var(--font-family-base);
     font-weight: 400;
     line-height: 1.6;
-    color-scheme: light;
 }
 
-/* Fundo com transparência sutil */
 body::before {
     content: "";
     position: fixed;
@@ -50,23 +45,26 @@ body::before {
     background-image: url('../imagens_geral/fundo_site.png');
     background-repeat: repeat;
     background-size: 400px;
-    opacity: 1; /* Bem mais clarinho para não poluir o branco */
+    opacity: 0.9; 
     z-index: -1; 
     pointer-events: none; 
 }
 
 /* ==========================================================================
-   3. CABEÇALHO (HEADER) - NOVO VISUAL CLARO E ANIMADO
+   3. CABEÇALHO (HEADER) - NOVO VISUAL CLARO
    ========================================================================== */
 header {
-    background: #ffffff; /* Fundo totalmente branco */
-    color: var(--color-text-main); /* Textos escuros */
-    padding: 24px 16px;
-    position: relative;
-    border-top: 5px solid var(--color-primary); /* Faixa vermelha no topo */
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06); /* Sombra suave para destacar do fundo */
+    /* Película branca (rgba) por cima da imagem para deixá-la mais suave/opaca */
+    background: linear-gradient(rgba(255, 255, 255, 0.281), rgba(255, 255, 255, 0.65)), url('../imagens_geral/fundo_header.png');
+    background-size: 100% auto; 
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
     
-    /* Animação 1: Entrada suave do cabeçalho */
+    padding: 40px 16px;
+    position: relative;
+    border-top: 5px solid var(--color-primary);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
     animation: slideDownFade 0.6s ease-out forwards;
 }
 
@@ -75,7 +73,6 @@ header {
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* Animação 2: Pulo e giro da logo */
 .logo {
     position: absolute;
     top: 32px;
@@ -86,6 +83,7 @@ header {
     object-fit: cover;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
 }
 
 .logo:hover {
@@ -93,7 +91,7 @@ header {
 }
 
 .header-inner {
-    max-width: var(--container-max-width);
+    max-width: 700px; 
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -101,17 +99,26 @@ header {
     justify-content: center;
     gap: 15px;
     text-align: center;
+    
+    /* CAIXA DE VIDRO FOSCO REFORÇADA PARA LEITURA */
+    background: rgba(255, 255, 255, 0.178); 
+    backdrop-filter: blur(2px); 
+    -webkit-backdrop-filter: blur(10px); 
+    padding: 24px 40px;
+    border-radius: 30px;
+    border: 1px solid rgb(179, 4, 4); 
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); 
 }
 
 header h1 {
     font-size: clamp(1.8rem, 2.5vw, 3rem);
     line-height: 1.1;
     font-family: var(--font-family-heading);
-    color: var(--color-text-main); /* Título Preto */
+    color: var(--color-primary); 
 }
 
 /* ==========================================================================
-   4. MENU E ANIMAÇÃO DE LINKS
+   4. MENU, LINKS E BUSCA NO HEADER
    ========================================================================== */
 nav {
     display: flex;
@@ -121,7 +128,7 @@ nav {
 }
 
 nav a {
-    color: var(--color-text-muted); /* Links em cinza escuro */
+    color: var(--color-text-main); 
     text-decoration: none;
     padding: 8px 12px;
     font-family: var(--font-family-heading);
@@ -131,7 +138,6 @@ nav a {
     transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
 }
 
-/* Animação 3: Barrinha vermelha sublinhando o link */
 nav a::after {
     content: '';
     position: absolute;
@@ -146,12 +152,56 @@ nav a::after {
 }
 
 nav a:hover {
-    color: var(--color-primary); /* Fica vermelho ao passar o mouse */
+    color: var(--color-primary); 
     transform: translateY(-2px);
 }
 
 nav a:hover::after {
-    width: 80%; /* A barrinha cresce */
+    width: 80%; 
+}
+
+.header-actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.search-box {
+    position: relative;
+    width: min(100%, 420px);
+}
+
+.search-box::before {
+    content: "\1F50D";
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.header-actions input {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 999px;
+    padding: 12px 18px 12px 46px;
+    font-size: 1rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.85); 
+    transition: all var(--transition-speed) ease;
+}
+
+.header-actions input:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-primary);
+    background: #ffffff;
 }
 
 /* ========================================================
@@ -165,12 +215,19 @@ nav a:hover::after {
     align-items: center;
     gap: 15px;
     z-index: 10;
+    
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 8px 12px;
+    border-radius: 999px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
 }
 
-/* O botão Entrar agora é claro com borda vermelha */
 .btn-entrar {
     color: var(--color-primary);
-    background: transparent;
+    background: #ffffff; 
     border: 2px solid var(--color-primary);
     font-family: var(--font-family-heading);
     font-weight: bold;
@@ -198,8 +255,8 @@ nav a:hover::after {
 }
 
 .bolinha-perfil {
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--color-primary);
@@ -208,159 +265,127 @@ nav a:hover::after {
 }
 
 /* ==========================================================================
-   5. BUSCA E ESTRUTURA DOS CARDS DO RANKING
+   5. ESTRUTURA PRINCIPAL (MAIN) - EXATAMENTE COMO ERA ANTES
    ========================================================================== */
-.header-actions {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 10px;
-}
-
-.search-box {
-    position: relative;
-    width: min(100%, 420px);
-}
-
-.search-box::before {
-    content: "\1F50D";
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--color-text-muted);
-    font-size: 1rem;
-    pointer-events: none;
-}
-
-.header-actions input {
-    width: 100%;
-    border: 2px solid #eaeaea;
-    border-radius: 999px;
-    padding: 12px 18px 12px 46px;
-    font-size: 1rem;
-    outline: none;
-    background: #fdfdfd;
-    transition: all var(--transition-speed) ease;
-}
-
-.header-actions input:focus {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    border-color: var(--color-primary);
-    background: var(--color-bg-card);
-}
-
 main.container {
     max-width: var(--container-max-width);
-    margin: 40px auto;
+    margin: 36px auto;
     padding: 0 16px;
 }
 
 main h2 {
-    margin-bottom: 30px;
-    font-size: clamp(1.8rem, 2vw, 2.4rem);
-    color: var(--color-text-main);
+    margin-bottom: 24px;
+    font-size: clamp(1.6rem, 2vw, 2.4rem);
+    color: var(--color-primary);
     font-family: var(--font-family-heading);
-    text-align: center;
 }
 
 .grid-lojas {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 22px;
 }
 
+/* ==========================================================================
+   6. COMPONENTE: CARD DA LOJA (DE VOLTA AO LAYOUT ORIGINAL)
+   ========================================================================== */
 .item-card {
     position: relative;
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 20px;
-    background: rgba(255, 255, 255, 0.98);
+    /* Imagem na esquerda, resto na direita[cite: 3] */
+    grid-template-columns: minmax(380px, 1.7fr) minmax(380px, 1.3fr);
+    grid-template-rows: auto 1fr;
+    gap: 24px;
+    background: rgba(255, 255, 255, 0.96);
     border-radius: 28px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 107, 121, 0.16);
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
-    transition: all var(--transition-speed) ease;
-    padding: 16px;
-    align-items: center;
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.08);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease;
+    align-items: stretch;
 }
 
 .item-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-    border-color: rgba(229, 57, 53, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.14);
+    border-color: rgba(255, 86, 105, 0.22);
 }
 
 .item-title {
     position: absolute;
-    top: 32px;
-    left: 32px;
-    width: auto;
-    max-width: 80%;
-    padding: 12px 20px;
-    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    top: 18px;
+    left: 18px;
+    width: clamp(240px, 48%, 520px);
+    padding: 16px 18px;
+    font-size: clamp(1.25rem, 2vw, 1.55rem);
+    font-weight: 700;
     font-family: var(--font-family-heading);
-    color: var(--color-text-main);
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    letter-spacing: 0.02em;
+    color: var(--color-primary-dark);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 18px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.10);
     z-index: 2;
 }
 
 .store-image {
+    /* Imagem travada na coluna 1 da esquerda[cite: 3] */
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
     width: 100%;
-    height: 100%;
-    min-height: 380px;
-    max-height: 480px;
+    min-height: 460px;
+    max-height: 520px;
     object-fit: cover;
-    border-radius: 20px;
     display: block;
+    filter: saturate(1.06);
 }
 
 .top-accounts {
+    /* Perfis no topo da coluna 2 da direita[cite: 3] */
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
     display: flex;
     flex-wrap: wrap;
     gap: 18px;
-    padding: 22px;
+    padding: 24px 24px;
     align-items: center;
     justify-content: center;
     background: #fdfdfd;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    border-radius: 28px;
+    border: 1px solid rgba(255, 163, 175, 0.30);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 12px 24px rgba(0, 0, 0, 0.06);
 }
 
 .top-accounts img {
-    width: 60px;
-    height: 60px;
+    width: 100px; 
+    height: 100px; 
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #fff;
+    border: 2px solid #fff;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
 }
 
 .top-accounts img:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 .item-description {
-    padding: 24px;
-    font-size: 1.05rem;
+    /* Descrição na parte de baixo da coluna 2[cite: 3] */
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    padding: 28px 26px;
+    font-size: 1.08rem;
     color: var(--color-text-muted);
-    line-height: 1.7;
+    line-height: 1.85;
     background: #fdfdfd;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-    text-align: center;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 182, 193, 0.22);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.05);
 }
 
 /* ==========================================================================
-   6. RODAPÉ E RESPONSIVIDADE
+   7. RODAPÉ E RESPONSIVIDADE
    ========================================================================== */
 footer {
     background: #111;
@@ -372,25 +397,37 @@ footer {
 }
 
 @media (max-width: 880px) {
-    .item-card {
-        grid-template-columns: 1fr;
-        padding: 12px;
+    .item-card { 
+        grid-template-columns: 1fr; 
+        grid-template-rows: auto auto auto; 
+        padding: 0;
     }
-    
-    .store-image {
-        min-height: 280px;
+    .store-image { 
+        min-height: 300px; 
+        grid-column: 1 / -1; 
+        grid-row: 1 / 2; 
     }
-
     .item-title {
-        position: absolute;
-        top: 24px;
-        left: 24px;
+        position: static;
+        width: auto;
+        margin: 16px;
+        transform: translateY(-40px);
+    }
+    .top-accounts { 
+        grid-column: 1 / -1; 
+        grid-row: 2 / 3; 
+        margin: 0 16px; 
+    }
+    .item-description { 
+        grid-column: 1 / -1; 
+        grid-row: 3 / 4; 
+        margin: 16px 16px 24px 16px; 
     }
 }
 
 @media (max-width: 768px) {
     header { padding-top: 40px; }
-    .header-user-menu { top: 15px; right: 15px; }
+    .header-user-menu { top: 15px; right: 15px; background: transparent; backdrop-filter: none; box-shadow: none; border: none;}
     .bolinha-perfil { width: 45px; height: 45px; }
     .btn-entrar { display: none; }
     .logo { position: static; margin: 0 auto; margin-bottom: 15px; }
